@@ -36,6 +36,7 @@ export class LoginPage {
       return;
     }
   
+    // Mostrar un indicador de carga
     const loading = await this.loadingController.create({
       message: 'Iniciando sesión...',
     });
@@ -43,10 +44,19 @@ export class LoginPage {
   
     try {
       const response = await this.authService.login(this.email, this.password).toPromise();
-      console.log('Respuesta del servidor:', response); // Añade este registro para depuración
       await loading.dismiss();
+  
       if (response.success) {
-        this.router.navigate(['/home']);
+        // Guardar el tipo de usuario en el almacenamiento local
+        localStorage.setItem('tipoUsuario', response.tipoUsuario);
+  
+        // Redirigir según el tipo de usuario
+        if (response.tipoUsuario === 'profesor') {
+          this.router.navigate(['/inicio-profesores']);  // Asegúrate de que el nombre coincida
+        } else {
+          this.router.navigate(['/inicio-alumnos']);  // Asegúrate de que el nombre coincida
+        }
+        
       } else {
         await this.presentAlert('Error', 'Correo o contraseña incorrectos.');
       }
@@ -56,4 +66,5 @@ export class LoginPage {
       console.error('Error al iniciar sesión:', error);
     }
   }
+  
 }

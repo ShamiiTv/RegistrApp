@@ -68,23 +68,25 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  console.log('Datos de inicio de sesión recibidos:', req.body); // Agregado para depuración
-
   try {
     // Verifica si el usuario existe y la contraseña es correcta
     const [results] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
     if (results.length > 0) {
       const user = results[0];
-      // Compara la contraseña almacenada con la proporcionada
-      const isPasswordMatch = await bcrypt.compare(password, user.password);
 
-      if (isPasswordMatch) {
-        return res.status(200).json({ success: true, message: 'Inicio de sesión exitoso.' });
+      // Compara la contraseña
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        // Usuario encontrado y contraseña correcta
+        return res.status(200).json({ success: true, tipoUsuario: user.tipoUsuario });
       } else {
+        // Contraseña incorrecta
         return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
       }
     } else {
+      // Usuario no encontrado
       return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
     }
   } catch (err) {
@@ -92,6 +94,7 @@ app.post('/login', async (req, res) => {
     return res.status(500).json({ message: 'Error al iniciar sesión.' });
   }
 });
+
 
 
 
