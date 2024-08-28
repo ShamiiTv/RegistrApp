@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,23 @@ export class LoginPage {
   password: string = '';
   rememberMe: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private alertController: AlertController
+  ) {}
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Datos Invalido',
+      subHeader: 'El usuario o la contraseña son incorrectos',
+      buttons: ['Aceptar'],
+    });
+    await alert.present();
+  }
   login() {
-    // Aquí deberías implementar la lógica de autenticación real
     if (this.email === 'usuario@ejemplo.com' && this.password === 'contraseña') {
       this.router.navigate(['/home']);
     } else {
-      alert('Credenciales incorrectas');
+      this.presentAlert();
     }
   }
 }
