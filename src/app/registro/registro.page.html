@@ -1,0 +1,55 @@
+<ion-content padding class="background">
+  <div class="LoginLogo">
+    <img src="assets/imagenes/iconos/Registrappicon.png" class="Logo" alt="Logo" />
+  </div>
+  <div class="BienvenidaTXT">Isa la bonita 😘</div>
+
+  <div class="FormularioLogin">
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="FormularioLogin">
+      <div class="FormularioLogin">
+        <input type="text" placeholder="Correo Institucional" ngModel name="email" required email />
+        <input type="password" placeholder="Contraseña" ngModel name="password" required minlength="6" />
+        <input type="password" placeholder="Confirmar Contraseña" ngModel name="confirmPassword" required minlength="6" />
+      </div>
+      
+      <ion-item>
+        <ion-label>Tipo de Usuario</ion-label>
+        <ion-radio-group [(ngModel)]="tipoUsuario" (ionChange)="onUserTypeChange($event)" name="userType" required>
+          <ion-item>
+            <ion-label>Alumno</ion-label>
+            <ion-radio slot="start" value="alumno"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Profesor</ion-label>
+            <ion-radio slot="start" value="profesor"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+
+      <div *ngIf="tipoUsuario === 'profesor'" class="FormularioLogin">
+        <input type="text" id="codigoProfesor" name="codigoProfesor" placeholder="Código Profesor" ngModel required minlength="5" />
+      </div>
+
+      <div class="wrapper">
+        <div 
+          class="ion-activatable ripple-parent custom-parent"
+          [class.disabled]="!registerForm.valid || isSubmitting"
+          (click)="onSubmit(registerForm)"
+        >
+          Registrarse
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="nuevousuario">
+    <h6>Ya tienes cuenta? <a [routerLink]="['/login']">Inicia Sesión</a></h6>
+  </div>
+  <div class="lineadivisora"></div>
+  <div class="redesiniciosesion">
+    <a href="#"><img src="assets/imagenes/iconos/LogoGogle.png" alt="Logo Google" /></a>
+    <a href="#"><img src="assets/imagenes/iconos/iLogo.png" alt="Logo iLogo" /></a>
+    <a href="#"><img src="assets/imagenes/iconos/LogoMicrosoft.png" alt="Logo Microsoft" /></a>
+  </div>
+</ion-content>

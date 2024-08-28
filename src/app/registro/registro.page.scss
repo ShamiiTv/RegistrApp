@@ -1,0 +1,205 @@
+ion-content.background {
+    --background: url(/assets/imagenes/background/bg.png) 0 0/100% 100% no-repeat;
+    width: 100%; /* Asegura que el contenido ocupe el 100% del ancho */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Asegura que el contenido ocupe el 100% de la altura */
+  }
+  
+  .LoginLogo {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .BienvenidaTXT {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    height: 15%;
+  }
+  
+  .FormularioLogin {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto; /* Centra el formulario */
+    row-gap: 15px;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 350px; /* Limita el ancho máximo para evitar que se desborde */
+    
+  }
+  input {
+    width: 100%;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem; /* Tamaño de fuente responsivo */
+    box-sizing: border-box;
+  }
+  
+  input::placeholder {
+    color: #999;
+  }
+  
+  .RecuerdameOlvidaste {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #999;
+    padding: 0 1rem;
+    font-weight: bold;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+  
+  .RecuerdameOlvidaste a {
+    color: #999;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 6rem;
+  }
+  
+  .BotonLogin {
+    padding: 3rem;
+  }
+  
+  .wrapper {
+    width: 100%;
+    max-width: 350px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra el botón */
+    display: flex;
+    justify-content: center;
+  }
+  
+  b {
+    width: 100%;
+  }
+  
+  .ripple-parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    position: relative;
+    overflow: hidden;
+  
+    border: 2px solid #b083ff;
+  
+    user-select: none;
+  
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .custom-parent {
+    color: #4499fd;
+  }
+  
+  .custom-ripple {
+    color: #501ace;
+  }
+  
+  .nuevousuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: #999;
+    padding: 1rem;
+    font-weight: bold;
+    height: 1rem;
+  }
+  
+  .nuevousuario h6 {
+    color: #999;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .nuevousuario a {
+    color: #4499fd;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .lineadivisora {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 65%;
+    margin-bottom: 20px;
+    border-bottom: 2.5px solid #9393b4;
+  }
+  
+  /* Contenedor de los iconos */
+  .redesiniciosesion {
+    width: 100%;
+    max-width: 350px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra el contenedor de íconos */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .redesiniciosesion a {
+    margin: 0 1rem; /* Espacio horizontal entre los enlaces */
+  }
+  
+  .redesiniciosesion img {
+    max-width: 40px; /* Ajusta el tamaño máximo de los íconos */
+    width: auto; /* Mantén las proporciones */
+    height: auto;
+  }
+  
+  @media (max-width: 480px) {
+    .FormularioLogin,
+    .RecuerdameOlvidaste,
+    .wrapper,
+    .redesiniciosesion {
+      max-width: 300px; /* Reduce el ancho máximo en pantallas más pequeñas */
+    }
+  
+    .redesiniciosesion img {
+      max-width: 30px; /* Reduce el tamaño de los íconos en pantallas pequeñas */
+    }
+  
+    .RecuerdameOlvidaste a {
+      color: #999;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 3rem;
+    }
+  }
+  
+  @media (max-width: 280px) {
+    .FormularioLogin,
+    .RecuerdameOlvidaste,
+    .wrapper,
+    .redesiniciosesion {
+      max-width: 250px; /* Reduce el ancho máximo en pantallas más pequeñas */
+    }
+  
+    .redesiniciosesion img {
+      max-width: 25px; /* Reduce el tamaño de los íconos en pantallas pequeñas */
+    }
+  
+    .RecuerdameOlvidaste a {
+      color: white;
+    }
+  }
