@@ -13,12 +13,14 @@ export class RegistroPage implements OnInit {
 
   tipoUsuario: string = 'alumno'; // Valor por defecto
   isSubmitting: boolean = false;
+  isOscuro: boolean = false;  
 
   constructor(
     private alertController: AlertController,
     private loadingController: LoadingController,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit() {}
@@ -61,6 +63,10 @@ export class RegistroPage implements OnInit {
     this.tipoUsuario = event.detail.value;
   }
 
+  claroOscuro() {
+    this.isOscuro = !this.isOscuro;
+  } 
+
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,
@@ -69,4 +75,5 @@ export class RegistroPage implements OnInit {
     });
     await alert.present();
   }
+
 }

@@ -13,6 +13,7 @@ export class LoginPage {
   password: string = '';
   rememberMe: boolean = false;
   isSubmitting: boolean = false;
+  isOscuro: boolean = false;
 
   constructor(
     private router: Router,
@@ -29,6 +30,10 @@ export class LoginPage {
     });
     await alert.present();
   }
+
+  claroOscuro() {
+    this.isOscuro = !this.isOscuro;
+  } 
 
   async login() {
     if (!this.email || !this.password) {
@@ -47,6 +52,9 @@ export class LoginPage {
       await loading.dismiss();
   
       if (response.success) {
+        // Guardar el usuario en el almacenamiento local
+        localStorage.setItem('user', JSON.stringify(response.user)); // Asegúrate de que la respuesta contiene 'user'
+
         // Guardar el tipo de usuario en el almacenamiento local
         localStorage.setItem('tipoUsuario', response.tipoUsuario);
   
@@ -66,5 +74,4 @@ export class LoginPage {
       console.error('Error al iniciar sesión:', error);
     }
   }
-  
 }
