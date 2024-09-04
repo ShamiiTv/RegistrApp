@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-alumnos',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioAlumnosPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  cerrarSesion() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('tipoUsuario');
+
+    this.router.navigate(['/login']);
+  }
 }
