@@ -42,8 +42,9 @@ export class InicioAlumnosPage implements AfterViewInit {
 
   claroOscuro() {
     this.isOscuro = !this.isOscuro;
+    // Guarda el estado del tema en localStorage
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
-  
 
   toggleSetting(setting: string) {
     switch (setting) {
