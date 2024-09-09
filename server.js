@@ -69,24 +69,24 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Verifica si el usuario existe y la contraseña es correcta
     const [results] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
     if (results.length > 0) {
       const user = results[0];
 
-      // Compara la contraseña
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (isMatch) {
-        // Usuario encontrado y contraseña correcta
-        return res.status(200).json({ success: true, tipoUsuario: user.tipoUsuario });
+        // Enviar la preferencia del tema junto con la respuesta
+        return res.status(200).json({
+          success: true,
+          tipoUsuario: user.tipoUsuario,
+          isOscuro: user.isOscuro // Enviar la preferencia del tema
+        });
       } else {
-        // Contraseña incorrecta
         return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
       }
     } else {
-      // Usuario no encontrado
       return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
     }
   } catch (err) {
@@ -95,7 +95,43 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Ruta para actualizar preferencias del usuario
+app.post('/update-preferences', async (req, res) => {
+  const { email, isOscuro } = req.body;
 
+  try {
+    await db.query('UPDATE usuarios SET isOscuro = ? WHERE email = ?', [isOscuro, email]);
+    res.status(200).json({ message: 'Preferencias actualizadas correctamente.' });
+  } catch (err) {
+    console.error('Error al actualizar preferencias:', err);
+    res.status(500).json({ message: 'Error al actualizar preferencias.' });
+  }
+});
+
+// Rutas para asistencia
+app.post('/register-attendance', (req, res) => {
+  const { userId, date, status } = req.body; // userId es el ID del estudiante, date es la fecha y status es el estado de asistencia (presente, ausente, etc.)
+
+  const query = 'INSERT INTO asistencia (userId, date, status) VALUES (?, ?, ?)';
+  db.query(query, [userId, date, status], (err, result) => {
+    if (err) {
+      return res.status(500).send('Error al registrar la asistencia');
+    }
+    res.status(200).send('Asistencia registrada correctamente');
+  });
+});
+
+app.get('/get-attendance/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  const query = 'SELECT * FROM asistencia WHERE userId = ?';
+  db.query(query, [userId], (err, result) => {
+    if (err) {
+      return res.status(500).send('Error al obtener los datos de asistencia');
+    }
+    res.status(200).json(result);
+  });
+});
 
 
 // Inicia el servidor
