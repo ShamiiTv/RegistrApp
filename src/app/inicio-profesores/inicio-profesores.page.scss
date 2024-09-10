@@ -1,348 +1,333 @@
 ion-content.inicio-profesores {
-    --background: white;
+  --background: white;
+}
+
+ion-content.inicio-profesores.oscuro {
+  --background: #333333;
+}
+
+ion-content.inicio-profesores.oscuro .tituloHome,
+ion-content.inicio-profesores.oscuro .botonesHome,
+ion-content.inicio-profesores.oscuro .topBar h1,
+ion-content.inicio-profesores.oscuro ion-button,
+ion-content.inicio-profesores.oscuro .item1 {
+  color: #ffffff;
+}
+
+ion-content.inicio-profesores.oscuro .carrusel,
+ion-content.inicio-profesores.oscuro .boton1,
+ion-content.inicio-profesores.oscuro .boton2 {
+  background-color: #333333;
+}
+
+ion-content.inicio-profesores.oscuro .boton1,
+ion-content.inicio-profesores.oscuro .boton2 {
+  background-color: #1f8ef1;
+}
+
+ion-content.inicio-profesores.oscuro .bottomBar,
+ion-content.inicio-profesores.oscuro .topBar {
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+}
+
+ion-content.inicio-profesores.oscuro ion-button.active {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 40px;
+  transform: scale(1.2);
+}
+
+.divhome {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tituloHome {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bolder;
+  color: white;
+  text-align: center;
+  width: 100%;
+  height: 15%;
+}
+
+.carrusel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 20px;
+  margin-top: 130px;
+  margin-bottom: 50px;
+}
+
+.carrusel img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.botonesHome {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: space-around;
+  align-content: space-around;
+  height: 45%;
+  justify-items: center;
+  align-items: center;
+}
+
+.boton1,
+.boton2 {
+  color: white;
+  border: none;
+  border-radius: 20px;
+  width: 400px;
+  height: 150px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+  border-radius: 50px 50px 0 0;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+  border-radius: 0 0 50px 50px;
+}
+
+.topBar h1 {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.bottomBar ion-button {
+  color: white;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.bottomBar ion-button.active {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 40px;
+  transform: scale(1.2);
+}
+
+.bottomBar ion-button:hover {
+  transform: scale(1.1);
+}
+
+#calendar {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  margin-top: 110px;
+  color: black;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: center;
+}
+
+tbody td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  height: 80px;
+}
+
+.menuInicio {
+  margin-top: 110px;
+}
+
+.botonCerrarSesion {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #f44336;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 34px;
+  margin-top: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #73c0fc;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  left: 2px;
+  bottom: 2px;
+  z-index: 2;
+  background-color: #e8e8e8;
+  transition: 0.4s;
+}
+
+.sun svg {
+  position: absolute;
+  top: 6px;
+  left: 36px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.moon svg {
+  fill: #73c0fc;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.switch:hover .sun svg {
+  animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
   }
-  
-  ion-content.inicio-profesores.oscuro {
-    --background: #333333;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  ion-content.inicio-profesores.oscuro .tituloHome {
-    color: #ffffff;
+}
+
+.switch:hover .moon svg {
+  animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  ion-content.inicio-profesores.oscuro .botonesHome {
-    color: #ffffff;
+  25% {
+    transform: rotate(-10deg);
   }
-  
-  ion-content.inicio-profesores.oscuro .carrusel {
-    background-color: #333333;
+  75% {
+    transform: rotate(10deg);
   }
-  
-  ion-content.inicio-profesores.oscuro .boton1 {
-    background-color: #1f8ef1;
+  100% {
+    transform: rotate(0deg);
   }
-  
-  ion-content.inicio-profesores.oscuro .boton2 {
-    background-color: #1f8ef1;
-  }
-  
-  ion-content.inicio-profesores.oscuro .bottomBar {
-    background: linear-gradient(to right, #a71cf2, #1f8ef1);
-  }
-  
-  ion-content.inicio-profesores.oscuro .topBar {
-    background: linear-gradient(to right, #a71cf2, #1f8ef1);
-  }
-  
-  ion-content.inicio-profesores.oscuro .topBar h1 {
-    color: #ffffff;
-  }
-  
-  ion-content.inicio-profesores.oscuro ion-button {
-    color: #ffffff;
-  }
-  
-  ion-content.inicio-profesores.oscuro ion-button.active {
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-    border-radius: 40px;
-    transform: scale(1.2);
-  }
-  
-  
-  .divhome {
-    width: 100%;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .tituloHome {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    font-weight: bolder;
-    color: white;
-    text-align: center;
-    width: 100%;
-    height: 15%;
-  }
-  
-  .carrusel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    height: 100%;
-    margin: 0 auto;
-    border-radius: 20px;
-    margin-top: 130px;
-    margin-bottom: 50px;
-  }
-  
-  .carrusel img{
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-  
-  }
-  
-  .botonesHome {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr); /* Crea dos filas de igual altura */
-    justify-content: space-around; /* Distribuye el espacio horizontalmente */
-    align-content: space-around; /* Distribuye el espacio verticalmente */ /* Espacio entre los botones */
-    width: 100%;
-    height: 45%; /* Ajusta la altura según sea necesario */
-    justify-items: center; /* Centra los botones horizontalmente en su celda */
-    align-items: center; /* Centra los botones verticalmente en su celda */
-  }
-  
-  .boton1 {
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 400px;
-    height: 150px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .boton2 {
-    color: white;
-    border: none;
-    border-radius: 20px;
-    width: 400px;
-    height: 150px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  
-  .bottomBar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-    background: linear-gradient(to right, #a71cf2, #1f8ef1);
-    border-radius: 50px 50px 0 0;
-  }
-  
-  .topBar{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100px;
-    background: linear-gradient(to right, #a71cf2, #1f8ef1);
-    border-radius: 0 0 50px 50px;
-  }
-  
-  .topBar h1{
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-  }
-  
-  .bottomBar ion-button {
-    color: white;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .bottomBar ion-button.active {
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Sombra detrás del botón activo */
-    border-radius: 40px;
-    transform: scale(1.2); /* Agranda ligeramente el botón activo */
-  }
-  
-  .bottomBar ion-button:hover {
-    transform: scale(1.1); /* Agranda el botón cuando pasas el ratón */
-  }
-  
-  
-  
-  
-  #calendar {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 600px;
-    background-color: #ffffff; /* Ajustar el fondo del calendario si es necesario */
-    border-radius: 10px; /* Añadir bordes redondeados si se desea */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Añadir sombra para mejor visualización */
-    border: 1px solid #ddd; /* Añadir borde para mejor visualización */
-    margin-top: 110px;
-    color: black;
-    text-align: center;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  thead th {
-    background-color: #f4f4f4;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  tbody td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    height: 80px;
-  }
-  
-  .menuInicio{
-    margin-top: 110px;
-  }
-  
-  
-  
-  .botonCerrarSesion{
-    display: flex;
-    justify-content: center;
-    width: 80%;
-    margin: 0 auto;
-    height: 50px;
-    border-radius: 25px;
-    background-color: #f44336;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 20px;
-    align-items: center;
-  }
-  
-  .switch {
-    font-size: 17px;
-    position: relative;
-    display: inline-block;
-    width: 64px;
-    height: 34px;
-    margin-top: 10px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #73C0FC;
-    transition: .4s;
-    border-radius: 30px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 30px;
-    width: 30px;
-    border-radius: 20px;
-    left: 2px;
-    bottom: 2px;
-    z-index: 2;
-    background-color: #e8e8e8;
-    transition: .4s;
-  }
-  
-  .sun svg {
-    position: absolute;
-    top: 6px;
-    left: 36px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .moon svg {
-    fill: #73C0FC;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
-  }
-  
-  /* .switch:hover */.sun svg {
-    animation: rotate 15s linear infinite;
-  }
-  
-  @keyframes rotate {
-   
-    0% {
-      transform: rotate(0);
-    }
-  
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* .switch:hover */.moon svg {
-    animation: tilt 5s linear infinite;
-  }
-  
-  @keyframes tilt {
-   
-    0% {
-      transform: rotate(0deg);
-    }
-  
-    25% {
-      transform: rotate(-10deg);
-    }
-  
-    75% {
-      transform: rotate(10deg);
-    }
-  
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-  
-  .input:checked + .slider {
-    background-color: #183153;
-  }
-  
-  .input:focus + .slider {
-    box-shadow: 0 0 1px #183153;
-  }
-  
-  .input:checked + .slider:before {
-    transform: translateX(30px);
-  } 
-  
-  .item1{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 20px;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  ion-content.inicio-profesores.oscuro .item1{
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
-    color: #ffffff;
-  }
+}
+
+.input:checked + .slider {
+  background-color: #183153;
+}
+
+.input:focus + .slider {
+  box-shadow: 0 0 1px #183153;
+}
+
+.input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+.item1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+ion-content.inicio-profesores.oscuro .item1 {
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+
+.botonesHome a{
+  text-decoration: none;
+  color: rgb(255, 254, 254);
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+  width: 400px;
+  height: 150px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 10px;
+}
+
+.botonesHome ion-icon{
+  font-size: 2rem;
+  margin-right: 15px;
+}

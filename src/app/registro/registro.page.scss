@@ -1,11 +1,11 @@
 ion-content.background {
   --background: url('/assets/imagenes/background/bg.png') 0 0/100% 100% no-repeat;
-  width: 100%; /* Asegura que el contenido ocupe el 100% del ancho */
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Asegura que el contenido ocupe el 100% de la altura */
+  height: 100vh;
   background: url('/assets/imagenes/background/bg.png') 0 0/100% 100% no-repeat;
   transition: background 0.4s ease-in-out;
 }
@@ -44,309 +44,296 @@ ion-content.background.oscuro .alumnoprofesor {
   --inner-border-width: 0;
 } 
 
-  
-  .LoginLogo {
-    width: 250px;
-    height: 250px;
-    margin: 0 auto;
-    display: block;
+.LoginLogo {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  display: block;
+}
+
+.BienvenidaTXT {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+  height: 15%;
+}
+
+.FormularioLogin {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  row-gap: 15px;
+  width: 100%;
+  max-width: 350px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+.RecuerdameOlvidaste {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  color: #999;
+  padding: 0 1rem;
+  font-weight: bold;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.RecuerdameOlvidaste a {
+  color: #999;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 6rem;
+}
+
+.BotonLogin {
+  padding: 3rem;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+b {
+  width: 100%;
+}
+
+.ripple-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #b083ff;
+  user-select: none;
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.custom-parent {
+  color: #4499fd;
+}
+
+.custom-ripple {
+  color: #501ace;
+}
+
+.nuevousuario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #999;
+  padding: 1rem;
+  font-weight: bold;
+  height: 1rem;
+}
+
+.nuevousuario h6 {
+  color: #999;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nuevousuario a {
+  color: #4499fd;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.lineadivisora {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 65%;
+  margin-bottom: 20px;
+  border-bottom: 2.5px solid #9393b4;
+}
+
+.redesiniciosesion {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+}
+
+.redesiniciosesion a {
+  margin: 0 1rem;
+}
+
+.redesiniciosesion img {
+  max-width: 40px;
+  width: auto;
+  height: auto;
+}
+
+@media (max-width: 480px) {
+  .FormularioLogin,
+  .RecuerdameOlvidaste,
+  .wrapper,
+  .redesiniciosesion {
+    max-width: 300px; 
   }
-  
-  .BienvenidaTXT {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-    font-weight: bold;
-    color: #000000;
-    text-align: center;
-    width: 100%;
-    height: 15%;
+
+  .redesiniciosesion img {
+    max-width: 30px; 
   }
-  
-  .FormularioLogin {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto; /* Centra el formulario */
-    row-gap: 15px;
-    width: 100%; /* Ocupa todo el ancho disponible */
-    max-width: 350px; /* Limita el ancho máximo para evitar que se desborde */
-    
-  }
-  input {
-    width: 100%;
-    padding: 15px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem; /* Tamaño de fuente responsivo */
-    box-sizing: border-box;
-  }
-  
-  input::placeholder {
-    color: #999;
-  }
-  
-  .RecuerdameOlvidaste {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1rem;
-    color: #999;
-    padding: 0 1rem;
-    font-weight: bold;
-    width: 100%;
-    max-width: 350px;
-    margin: 0 auto;
-  }
-  
+
   .RecuerdameOlvidaste a {
     color: #999;
     font-weight: bold;
     text-decoration: none;
-    margin-left: 6rem;
+    margin-left: 3rem;
   }
-  
-  .BotonLogin {
-    padding: 3rem;
-  }
-  
-  .wrapper {
-    width: 100%;
-    max-width: 350px; /* Limita el ancho máximo */
-    margin: 0 auto; /* Centra el botón */
-    display: flex;
-    justify-content: center;
-  }
-  
-  b {
-    width: 100%;
-  }
-  
-  .ripple-parent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    position: relative;
-    overflow: hidden;
-  
-    border: 2px solid #b083ff;
-  
-    user-select: none;
-  
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    margin-top: 15px;
-    margin-bottom: 10px;
-  }
-  
-  .custom-parent {
-    color: #4499fd;
-  }
-  
-  .custom-ripple {
-    color: #501ace;
-  }
-  
-  .nuevousuario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    color: #999;
-    padding: 1rem;
-    font-weight: bold;
-    height: 1rem;
-  }
-  
-  .nuevousuario h6 {
-    color: #999;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .nuevousuario a {
-    color: #4499fd;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .lineadivisora {
-    display: flex;
-    margin: 0 auto;
-    margin-top: 20px;
-    width: 65%;
-    margin-bottom: 20px;
-    border-bottom: 2.5px solid #9393b4;
-  }
-  
-  /* Contenedor de los iconos */
+}
+
+@media (max-width: 280px) {
+  .FormularioLogin,
+  .RecuerdameOlvidaste,
+  .wrapper,
   .redesiniciosesion {
-    width: 100%;
-    max-width: 350px; /* Limita el ancho máximo */
-    margin: 0 auto; /* Centra el contenedor de íconos */
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem;
+    max-width: 250px;
   }
-  
-  .redesiniciosesion a {
-    margin: 0 1rem; /* Espacio horizontal entre los enlaces */
-  }
-  
+
   .redesiniciosesion img {
-    max-width: 40px; /* Ajusta el tamaño máximo de los íconos */
-    width: auto; /* Mantén las proporciones */
-    height: auto;
-  }
-  
-  @media (max-width: 480px) {
-    .FormularioLogin,
-    .RecuerdameOlvidaste,
-    .wrapper,
-    .redesiniciosesion {
-      max-width: 300px; /* Reduce el ancho máximo en pantallas más pequeñas */
-    }
-  
-    .redesiniciosesion img {
-      max-width: 30px; /* Reduce el tamaño de los íconos en pantallas pequeñas */
-    }
-  
-    .RecuerdameOlvidaste a {
-      color: #999;
-      font-weight: bold;
-      text-decoration: none;
-      margin-left: 3rem;
-    }
-  }
-  
-  @media (max-width: 280px) {
-    .FormularioLogin,
-    .RecuerdameOlvidaste,
-    .wrapper,
-    .redesiniciosesion {
-      max-width: 250px; /* Reduce el ancho máximo en pantallas más pequeñas */
-    }
-  
-    .redesiniciosesion img {
-      max-width: 25px; /* Reduce el tamaño de los íconos en pantallas pequeñas */
-    }
-  
-    .RecuerdameOlvidaste a {
-      color: white;
-    }
+    max-width: 25px; 
   }
 
+  .RecuerdameOlvidaste a {
+    color: white;
+  }
+}
 
-  .switch {
-    font-size: 17px;
-    position: relative;
-    display: inline-block;
-    width: 64px;
-    height: 34px;
-    margin-top: 30px;
-    margin-left: 15px;
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 34px;
+  margin-top: 30px;
+  margin-left: 15px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #73C0FC;
+  transition: .4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  left: 2px;
+  bottom: 2px;
+  z-index: 2;
+  background-color: #e8e8e8;
+  transition: .4s;
+}
+
+.sun svg {
+  position: absolute;
+  top: 6px;
+  left: 36px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.moon svg {
+  fill: #73C0FC;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.sun svg {
+  animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
   }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #73C0FC;
-    transition: .4s;
-    border-radius: 30px;
+}
+
+.moon svg {
+  animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 30px;
-    width: 30px;
-    border-radius: 20px;
-    left: 2px;
-    bottom: 2px;
-    z-index: 2;
-    background-color: #e8e8e8;
-    transition: .4s;
+  25% {
+    transform: rotate(-10deg);
   }
-  
-  .sun svg {
-    position: absolute;
-    top: 6px;
-    left: 36px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
+  75% {
+    transform: rotate(10deg);
   }
-  
-  .moon svg {
-    fill: #73C0FC;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
+  100% {
+    transform: rotate(0deg);
   }
-  
-  /* .switch:hover */.sun svg {
-    animation: rotate 15s linear infinite;
-  }
-  
-  @keyframes rotate {
-   
-    0% {
-      transform: rotate(0);
-    }
-  
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* .switch:hover */.moon svg {
-    animation: tilt 5s linear infinite;
-  }
-  
-  @keyframes tilt {
-   
-    0% {
-      transform: rotate(0deg);
-    }
-  
-    25% {
-      transform: rotate(-10deg);
-    }
-  
-    75% {
-      transform: rotate(10deg);
-    }
-  
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-  
-  .input:checked + .slider {
-    background-color: #183153;
-  }
-  
-  .input:focus + .slider {
-    box-shadow: 0 0 1px #183153;
-  }
-  
-  .input:checked + .slider:before {
-    transform: translateX(30px);
-  }
+}
+
+.input:checked + .slider {
+  background-color: #183153;
+}
+
+.input:focus + .slider {
+  box-shadow: 0 0 1px #183153;
+}
+
+.input:checked + .slider:before {
+  transform: translateX(30px);
+}

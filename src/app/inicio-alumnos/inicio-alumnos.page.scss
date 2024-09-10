@@ -90,13 +90,13 @@ ion-content.inicio-alumnos.oscuro ion-button.active {
 
 .botonesHome {
   display: grid;
-  grid-template-rows: repeat(2, 1fr); /* Crea dos filas de igual altura */
-  justify-content: space-around; /* Distribuye el espacio horizontalmente */
-  align-content: space-around; /* Distribuye el espacio verticalmente */ /* Espacio entre los botones */
+  grid-template-rows: repeat(2, 1fr); 
+  justify-content: space-around;
+  align-content: space-around;
   width: 100%;
-  height: 45%; /* Ajusta la altura según sea necesario */
-  justify-items: center; /* Centra los botones horizontalmente en su celda */
-  align-items: center; /* Centra los botones verticalmente en su celda */
+  height: 45%;
+  justify-items: center;
+  align-items: center;
 }
 
 .boton1 {
@@ -346,3 +346,25 @@ ion-content.inicio-alumnos.oscuro .item1{
   border-bottom: 1px solid #ffffff;
   color: #ffffff;
 }
+
+
+.botonesHome a{
+  text-decoration: none;
+  color: rgb(255, 254, 254);
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+  width: 400px;
+  height: 150px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 10px;
+}
+
+.botonesHome ion-icon{
+  font-size: 2rem;
+  margin-right: 15px;
+}
+

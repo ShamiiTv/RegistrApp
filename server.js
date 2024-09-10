@@ -2,16 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
-const bcrypt = require('bcrypt'); // Agrega bcrypt
-
+const bcrypt = require('bcrypt'); 
 const app = express();
 const port = 3000;
 
-// Configura middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// Configura la conexión a la base de datos
+
 const db = mysql.createPool({
   host: '127.0.0.1',
   port: 3306,
@@ -23,27 +22,24 @@ const db = mysql.createPool({
 app.post('/register', async (req, res) => {
   const { email, password, tipoUsuario, codigoProfesor, confirmPassword } = req.body;
 
-  console.log('Datos recibidos:', req.body); // Depuración
+  console.log('Datos recibidos:', req.body); 
 
-  // Verifica si las contraseñas coinciden
+
   if (password !== confirmPassword) {
     return res.status(400).json({ message: 'Las contraseñas no coinciden.' });
   }
 
-  // Hashea la contraseña
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Si es profesor, verifica el código
   if (tipoUsuario === 'profesor') {
     try {
-      // Verifica el código en la base de datos
       const [results] = await db.query('SELECT * FROM codigos_profesor WHERE codigo = ?', [codigoProfesor]);
 
       if (results.length === 0) {
         return res.status(400).json({ message: 'Código especial inválido para profesores.' });
       }
 
-      // Inserta el nuevo usuario en la base de datos
       await db.query('INSERT INTO usuarios (email, password, tipoUsuario, codigoProfesor) VALUES (?, ?, ?, ?)', [email, hashedPassword, tipoUsuario, codigoProfesor]);
       return res.status(201).json({ message: 'Usuario registrado exitosamente.' });
 
@@ -53,7 +49,6 @@ app.post('/register', async (req, res) => {
     }
   } else {
     try {
-      // Inserta el nuevo usuario en la base de datos para tipos que no son profesores
       await db.query('INSERT INTO usuarios (email, password, tipoUsuario, codigoProfesor) VALUES (?, ?, ?, ?)', [email, hashedPassword, tipoUsuario, null]);
       return res.status(201).json({ message: 'Usuario registrado exitosamente.' });
 
@@ -64,7 +59,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// Ruta para manejar el inicio de sesión
+
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -77,11 +72,10 @@ app.post('/login', async (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (isMatch) {
-        // Enviar la preferencia del tema junto con la respuesta
         return res.status(200).json({
           success: true,
           tipoUsuario: user.tipoUsuario,
-          isOscuro: user.isOscuro // Enviar la preferencia del tema
+          isOscuro: user.isOscuro 
         });
       } else {
         return res.status(401).json({ success: false, message: 'Correo o contraseña incorrectos.' });
@@ -95,7 +89,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Ruta para actualizar preferencias del usuario
+
 app.post('/update-preferences', async (req, res) => {
   const { email, isOscuro } = req.body;
 
@@ -108,9 +102,8 @@ app.post('/update-preferences', async (req, res) => {
   }
 });
 
-// Rutas para asistencia
 app.post('/register-attendance', (req, res) => {
-  const { userId, date, status } = req.body; // userId es el ID del estudiante, date es la fecha y status es el estado de asistencia (presente, ausente, etc.)
+  const { userId, date, status } = req.body; 
 
   const query = 'INSERT INTO asistencia (userId, date, status) VALUES (?, ?, ?)';
   db.query(query, [userId, date, status], (err, result) => {
@@ -134,7 +127,6 @@ app.get('/get-attendance/:userId', (req, res) => {
 });
 
 
-// Inicia el servidor
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

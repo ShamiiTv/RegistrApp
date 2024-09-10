@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController, AnimationController } from '@ionic/angular';
 import { AuthService } from '../auth.service'; 
 import { Haptics } from '@capacitor/haptics';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,6 @@ export class LoginPage implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Animación del logo
     this.animationCtrl.create()
       .addElement(document.querySelector("#logo")!)
       .duration(2000)
@@ -44,7 +44,6 @@ export class LoginPage implements AfterViewInit {
       .fromTo("transform", "rotate(-10deg)", "rotate(10deg)")
       .play();
   
-    // Animación de la bienvenida
     this.animationCtrl.create()
       .addElement(document.querySelector(".BienvenidaTXT")!)
       .duration(5000)
@@ -56,7 +55,6 @@ export class LoginPage implements AfterViewInit {
       ])
       .play();
   
-    // Animación del botón de inicio de sesión
     this.animationCtrl.create()
       .addElement(document.querySelector(".ripple-parent")!)
       .duration(4000)
@@ -67,7 +65,7 @@ export class LoginPage implements AfterViewInit {
   }
 
   async animarError(index: number) {
-    await Haptics.vibrate(); // Añadir vibración para un feedback háptico.
+    await Haptics.vibrate();
     const inputElement = document.querySelectorAll("input")[index];
   
     if (inputElement) {
@@ -91,40 +89,45 @@ export class LoginPage implements AfterViewInit {
   }
 
   async login() {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!this.email || !emailRegex.test(this.email)) {
-      await this.animarError(0);  // Índice 0 para el campo de correo
-      await this.presentAlert('Error', 'Por favor ingresa un correo válido.');
+    if (!this.email || !this.password) {
+      await this.presentAlert('Error', 'Por favor, ingresa tu correo y contraseña.');
+      if (!this.email) {
+        await this.animarError(0);
+      }
+      if (!this.password) {
+        await this.animarError(1);
+      }
       return;
     }
-
-    if (!this.password || this.password.length < 6) {
-      await this.animarError(1);  // Índice 1 para el campo de contraseña
-      await this.presentAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-
     this.isSubmitting = true;
     const loading = await this.loadingController.create({
       message: 'Iniciando sesión...',
     });
     await loading.present();
 
-    this.authService.login(this.email, this.password).subscribe(
-      async (success: boolean) => {
-        await loading.dismiss();
-        if (success) {
-          this.router.navigate(['/inicio']);
+    try {
+      const response = await firstValueFrom(this.authService.login(this.email, this.password));
+      await loading.dismiss();
+
+      if (response.success) {
+        localStorage.setItem('user', JSON.stringify(response.user));
+
+        localStorage.setItem('tipoUsuario', response.tipoUsuario);
+
+        if (response.tipoUsuario === 'profesor') {
+          this.router.navigate(['/inicio-profesores']); 
         } else {
-          await this.presentAlert('Error', 'Correo electrónico o contraseña incorrectos');
+          this.router.navigate(['/inicio-alumnos']); 
         }
-        this.isSubmitting = false;
-      },
-      async (error) => {
-        await loading.dismiss();
-        await this.presentAlert('Error', 'Correo electrónico o contraseña incorrectos');
-        this.isSubmitting = false;
-      }
-    );
+
+    } else {
+      await this.presentAlert('Error', 'Correo o contraseña incorrectos.');
+    }
+  } catch (error) {
+    await loading.dismiss();
+    await this.presentAlert('Error', 'Correo o contraseña incorrectos.');
+    console.error('Error al iniciar sesión:', error);
   }
+  this.isSubmitting = false;
+}
 }
