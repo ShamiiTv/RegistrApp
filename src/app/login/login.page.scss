@@ -341,3 +341,17 @@ b {
   transform: translateX(30px);
 } 
 
+
+.mensajeErrores{
+  height: 20px;
+  margin-bottom: 20px;
+}
+
+.mensajeErrores h5{
+  color: red;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}

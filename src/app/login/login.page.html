@@ -25,10 +25,42 @@
 
   <div class="FormularioLogin">
     <form (ngSubmit)="login()" #loginForm="ngForm" class="FormularioLogin">
-      <input type="text" placeholder="Correo Institucional" [(ngModel)]="email" name="email" required />
-      <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
+      <!-- Campo de correo electrónico -->
+      <input
+        type="text"
+        placeholder="Correo Institucional"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+        #emailInput="ngModel"
+      />
+      <!-- Mostrar error si el correo no es válido -->
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="mensajeErrores">
+        <h5 style="color: red;">
+          Por favor, ingresa un correo electrónico válido.
+        </h5>
+      </div>
+    
+      <!-- Campo de contraseña -->
+      <input
+        type="password"
+        placeholder="Contraseña"
+        [(ngModel)]="password"
+        name="password"
+        required
+        minlength="6"
+        #passwordInput="ngModel"
+      />
+      <!-- Mostrar error si la contraseña es demasiado corta -->
+      <div *ngIf="passwordInput.invalid && passwordInput.touched" class="mensajeErrores">
+        <h5 style="color: red;">
+          La contraseña debe tener al menos 6 caracteres.
+        </h5>
+      </div>
     </form>
   </div>
+  
   
   <div class="RecuerdameOlvidaste">
     <ion-checkbox [(ngModel)]="rememberMe" labelPlacement="end">Recuerdame</ion-checkbox>
