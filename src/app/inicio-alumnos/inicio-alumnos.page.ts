@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AnimationController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-inicio-alumnos',
@@ -14,11 +16,8 @@ export class InicioAlumnosPage implements AfterViewInit {
 
   currentView: string = 'home';
 
-  constructor(private router: Router, private http: HttpClient) {
-    // Inicializa los estados de los toggles desde localStorage si existen
+  constructor(private router: Router, private http: HttpClient, private animationCtrl: AnimationController) {
     this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
-    this.receiveEmails = JSON.parse(localStorage.getItem('receiveEmails') || 'false');
-    this.receiveTextMessages = JSON.parse(localStorage.getItem('receiveTextMessages') || 'false');
   }
 
   ngAfterViewInit() {
@@ -42,7 +41,6 @@ export class InicioAlumnosPage implements AfterViewInit {
 
   claroOscuro() {
     this.isOscuro = !this.isOscuro;
-    // Guarda el estado del tema en localStorage
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
 
@@ -53,22 +51,8 @@ export class InicioAlumnosPage implements AfterViewInit {
         this.receiveEmails = false;
         this.receiveTextMessages = false;
         break;
-      case 'receiveEmails':
-        this.receiveEmails = !this.receiveEmails;
-        this.isOscuro = false;
-        this.receiveTextMessages = false;
-        break;
-      case 'receiveTextMessages':
-        this.receiveTextMessages = !this.receiveTextMessages;
-        this.isOscuro = false;
-        this.receiveEmails = false;
-        break;
     }
-
-    // Guarda los valores en localStorage
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
-    localStorage.setItem('receiveEmails', JSON.stringify(this.receiveEmails));
-    localStorage.setItem('receiveTextMessages', JSON.stringify(this.receiveTextMessages));
   }
 
   generarCalendario() {
@@ -87,7 +71,6 @@ export class InicioAlumnosPage implements AfterViewInit {
       let html = '';
       let day = 1;
       
-      // Crear la tabla
       for (let row = 0; row < 6; row++) {
         html += '<tr>';
         for (let col = 0; col < 7; col++) {

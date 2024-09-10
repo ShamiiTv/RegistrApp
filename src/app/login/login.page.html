@@ -1,9 +1,8 @@
 <ion-content padding class="background" [ngClass]="{ 'oscuro': isOscuro }">
   <div class="LoginLogo">
-    <img src="assets/imagenes/iconos/Registrappicon.png" class="Logo" alt="Logo" />
+    <img id="logo" src="assets/imagenes/iconos/Registrappicon.png" class="Logo" alt="Logo" />
   </div>
 
-  
   <label class="switch">
     <span class="sun">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -21,7 +20,6 @@
     <input type="checkbox" class="input" (change)="claroOscuro()">
     <span class="slider"></span>
   </label>
-  
 
   <div class="BienvenidaTXT">Bienvenido De Vuelta!</div>
 
@@ -31,6 +29,7 @@
       <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required />
     </form>
   </div>
+  
   <div class="RecuerdameOlvidaste">
     <ion-checkbox [(ngModel)]="rememberMe" labelPlacement="end">Recuerdame</ion-checkbox>
     <a href="#">Olvidaste tu contraseña?</a>
@@ -42,10 +41,13 @@
       <ion-ripple-effect></ion-ripple-effect>
     </div>
   </div>
+
   <div class="nuevousuario">
     <h6>Nuevo usuario? <a [routerLink]="['/registro']">Regístrate</a></h6>
   </div>
+
   <div class="lineadivisora"></div>
+  
   <div class="redesiniciosesion">
     <a href="#"><img src="assets/imagenes/iconos/LogoGogle.png" alt="Logo Google" /></a>
     <a href="#"><img src="assets/imagenes/iconos/iLogo.png" alt="Logo iLogo" /></a>

@@ -238,6 +238,7 @@ b {
   width: 64px;
   height: 34px;
   margin-top: 30px;
+  margin-left: 15px;
 }
 
 .switch input {
@@ -339,3 +340,4 @@ b {
 .input:checked + .slider:before {
   transform: translateX(30px);
 } 
+

@@ -15,7 +15,6 @@ export class InicioProfesoresPage implements OnInit, AfterViewInit {
   currentView: string = 'home';
 
   constructor(private router: Router, private http: HttpClient) {
-    // Inicializa los estados de los toggles desde localStorage si existen
     this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
     this.receiveEmails = JSON.parse(localStorage.getItem('receiveEmails') || 'false');
     this.receiveTextMessages = JSON.parse(localStorage.getItem('receiveTextMessages') || 'false');
@@ -44,7 +43,6 @@ export class InicioProfesoresPage implements OnInit, AfterViewInit {
 
   claroOscuro() {
     this.isOscuro = !this.isOscuro;
-    // Guarda el estado del modo oscuro en localStorage
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
 
@@ -66,8 +64,6 @@ export class InicioProfesoresPage implements OnInit, AfterViewInit {
         this.receiveEmails = false;
         break;
     }
-
-    // Guarda los valores en localStorage
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
     localStorage.setItem('receiveEmails', JSON.stringify(this.receiveEmails));
     localStorage.setItem('receiveTextMessages', JSON.stringify(this.receiveTextMessages));

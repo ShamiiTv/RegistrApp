@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service'; // Ajusta la ruta si es necesario
+import { AnimationController } from '@ionic/angular';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-registro',
@@ -20,10 +22,20 @@ export class RegistroPage implements OnInit {
     private loadingController: LoadingController,
     private router: Router,
     private authService: AuthService,
+    private animationCtrl: AnimationController
 
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.animationCtrl.create()
+    .addElement(document.querySelector("#logo")!)
+    .duration(2000)
+    .iterations(Infinity)
+    .direction("alternate")
+    .fromTo("color", "#6DDC98", "#51C8F0")
+    .fromTo("transform", "rotate(-10deg)", "rotate(10deg)")
+    .play()
+  }
 
   async onSubmit(form: NgForm) {
     if (form.invalid) {
