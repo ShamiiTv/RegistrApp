@@ -13,9 +13,10 @@ import { Haptics } from '@capacitor/haptics';
 })
 export class RegistroPage implements AfterViewInit {
 
-  tipoUsuario: string = 'alumno'; // Valor por defecto
+  tipoUsuario: string = 'alumno';
   isSubmitting: boolean = false;
   isOscuro: boolean = false;
+  codigoProfesor: string = '123456, 654321';
 
   constructor(
     private alertController: AlertController,
@@ -26,7 +27,6 @@ export class RegistroPage implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    // Animación del logo
     this.animationCtrl.create()
       .addElement(document.querySelector("#logo")!)
       .duration(2000)
@@ -36,7 +36,6 @@ export class RegistroPage implements AfterViewInit {
       .fromTo("transform", "rotate(-10deg)", "rotate(10deg)")
       .play();
 
-    // Animación de la bienvenida
     this.animationCtrl.create()
       .addElement(document.querySelector(".BienvenidaTXT")!)
       .duration(5000)
@@ -48,7 +47,6 @@ export class RegistroPage implements AfterViewInit {
       ])
       .play();
 
-    // Animación del botón de registro
     this.animationCtrl.create()
       .addElement(document.querySelector(".ripple-parent")!)
       .duration(4000)
@@ -56,68 +54,6 @@ export class RegistroPage implements AfterViewInit {
       .fromTo('transform', 'scale(0.8)', 'scale(1)')
       .fromTo('opacity', '0', '1')
       .play();
-  }
-
-  async animarError(index: number) {
-    await Haptics.vibrate(); // Añadir vibración para un feedback háptico.
-    const inputElement = document.querySelectorAll("input")[index];
-
-    if (inputElement) {
-      this.animationCtrl.create()
-        .addElement(inputElement)
-        .duration(100)
-        .iterations(3)
-        .keyframes([
-          { offset: 0, transform: "translateX(0px)", border: "1px transparent solid" },
-          { offset: 0.25, transform: "translateX(-5px)", border: "1px red solid" },
-          { offset: 0.50, transform: "translateX(0px)", border: "1px transparent solid" },
-          { offset: 0.75, transform: "translateX(5px)", border: "1px red solid" },
-          { offset: 1, transform: "translateX(0px)", border: "1px transparent solid" },
-        ])
-        .play();
-    }
-  }
-
-  claroOscuro() {
-    this.isOscuro = !this.isOscuro;
-  }
-
-  async onSubmit(form: NgForm) {
-    if (form.invalid) {
-      form.form.markAllAsTouched();
-      await this.presentAlert('Error', 'Por favor, completa el formulario correctamente.');
-      return;
-    }
-
-    const { email, password, confirmPassword, codigoProfesor } = form.value;
-
-    // Verificar que las contraseñas coincidan
-    if (password !== confirmPassword) {
-      await this.animarError(2); // Índice 2 para la confirmación de contraseña
-      await this.presentAlert('Error', 'Las contraseñas no coinciden.');
-      return;
-    }
-
-    // Mostrar un indicador de carga
-    const loading = await this.loadingController.create({
-      message: 'Registrando...',
-    });
-    await loading.present();
-
-    try {
-      await this.authService.register(email, password, confirmPassword, this.tipoUsuario, codigoProfesor).toPromise();
-      await loading.dismiss();
-      await this.presentAlert('Éxito', 'Registro completado exitosamente.');
-      this.router.navigate(['/login']);
-    } catch (error) {
-      await loading.dismiss();
-      await this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
-      console.error('Error al registrar:', error);
-    }
-  }
-
-  onUserTypeChange(event: any) {
-    this.tipoUsuario = event.detail.value;
   }
 
   async presentAlert(header: string, message: string) {
@@ -128,4 +64,134 @@ export class RegistroPage implements AfterViewInit {
     });
     await alert.present();
   }
+
+  async validateField(field: string, value: string) {
+    switch (field) {
+      case 'nombre':
+        if (value.length < 3) {
+          await this.presentAlert('Error', 'El nombre debe tener al menos 3 caracteres.');
+        }
+        break;
+      case 'email':
+        if (!this.isEmailValid(value)) {
+          await this.presentAlert('Error', 'Por favor, ingresa un correo electrónico válido.');
+        }
+        break;
+      case 'password':
+        if (value.length < 6) {
+          await this.presentAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+        }
+        break;
+      case 'confirmPassword':
+        const password = (document.querySelector('input[name="password"]') as HTMLInputElement).value;
+        if (value !== password) {
+          await this.presentAlert('Error', 'Las contraseñas no coinciden.');
+        }
+        break;
+      case 'codigoProfesor':
+        if (this.tipoUsuario === 'profesor') {
+          const validCodes = this.codigoProfesor.split(',').map(code => code.trim());
+          if (!validCodes.includes(value)) {
+            await this.presentAlert('Error', 'El código de profesor es inválido.');
+          }
+        }
+        break;
+    }
+  }
+
+  claroOscuro() {
+    this.isOscuro = !this.isOscuro;
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
+  }
+
+  ionViewWillEnter() {
+    this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
+  }
+
+  toggleSetting(setting: string) {
+    switch (setting) {
+      case 'darkMode':
+        this.isOscuro = !this.isOscuro;
+        break;
+    }
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
+  }
+
+
+  async onSubmit(form: NgForm) {
+    console.log('Formulario enviado:', form.value); // Agrega esta línea para verificar
+    if (form.invalid) {
+        form.form.markAllAsTouched();
+        await this.presentAlert('Error', 'Por favor, completa el formulario correctamente.');
+        return;
+    }
+
+    const { nombre, email, password, confirmPassword, codigoProfesor } = form.value;
+
+    if (nombre.length < 3) {
+      await this.presentAlert('Error', 'El nombre debe tener al menos 3 caracteres.');
+      return;
+    }
+    if (!this.isEmailValid(email)) {
+      await this.presentAlert('Error', 'Por favor, ingresa un correo electrónico válido.');
+      return;
+    }
+
+    if (password.length < 6) {
+      await this.presentAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      await this.presentAlert('Error', 'Las contraseñas no coinciden.');
+      return;
+    }
+
+    if (this.tipoUsuario === 'profesor') {
+      const validCodes = this.codigoProfesor.split(',').map(code => code.trim());
+      if (!validCodes.includes(codigoProfesor)) {
+        await this.presentAlert('Error', 'El código de profesor es inválido.');
+        return;
+      }
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Registrando...',
+    });
+    await loading.present();
+
+    try {
+      const userData = {
+        nombre,
+        email,
+        password,
+        tipoUsuario: this.tipoUsuario,
+        codigoProfesor: this.tipoUsuario === 'profesor' ? codigoProfesor : null,
+      };
+
+      localStorage.setItem(email, JSON.stringify(userData));
+      await loading.dismiss();
+      await this.presentAlert('Éxito', 'Registro completado exitosamente.');
+      this.router.navigate(['/login']);
+    } catch (error) {
+      await loading.dismiss();
+      await this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
+      console.error('Error al registrar:', error);
+    }
+  }
+
+  isEmailValid(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+
+  onUserTypeChange(event: any) {
+    this.tipoUsuario = event.detail.value;
+  }
+
+  verstorage() {
+    const users = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)!));
+    console.log('Usuarios:', users);
+  }
+
 }

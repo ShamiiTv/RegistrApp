@@ -13,7 +13,7 @@
       <img src="/assets/imagenes/carrusel/carrusel1.png" alt="" />
     </div>
     <div class="botonesHome">
-      <a><ion-icon name="camera-outline" ></ion-icon>Marcar Asistencia</a>
+      <a (click)="scan()"><ion-icon name="camera-outline" ></ion-icon>Marcar Asistencia</a>
       <a><ion-icon name="newspaper-outline"></ion-icon>Justificar Inasistencia</a>
     </div>
   </div>
@@ -47,6 +47,9 @@
           <span class="slider"></span>
         </label>
       </div>
+      <div class="item1">
+        <h3><a (click)="cambiarVista('contrasena')">Cambiar contraseña</a></h3>
+      </div>      
       <button class="botonCerrarSesion" (click)="cerrarSesion()">Cerrar Sesión</button>
     </div>
   </div>
@@ -57,21 +60,78 @@
         <h6>Calendario Asistencia</h6>
       </h1>
     </div>
-    <div id="calendar">
-      <table>
-        <thead>
-          <tr>
-            <th>Dom</th>
-            <th>Lun</th>
-            <th>Mar</th>
-            <th>Mié</th>
-            <th>Jue</th>
-            <th>Vie</th>
-            <th>Sáb</th>
-          </tr>
-        </thead>
-        <tbody id="calendar-body"></tbody>
-      </table>
+
+    <div *ngIf="clasesHoy.length >= 0" class="clases-hoy">
+      <div class="dias">
+        <div [ngClass]="{'diaActivo': esDiaActivo(1)}" (click)="cambiarDia(1)">
+          <h5>Lu</h5>
+        </div>
+        <div [ngClass]="{'diaActivo': esDiaActivo(2)}" (click)="cambiarDia(2)">
+          <h5>Ma</h5>
+        </div>
+        <div [ngClass]="{'diaActivo': esDiaActivo(3)}" (click)="cambiarDia(3)">
+          <h5>Mi</h5>
+        </div>
+        <div [ngClass]="{'diaActivo': esDiaActivo(4)}" (click)="cambiarDia(4)">
+          <h5>Ju</h5>
+        </div>
+        <div [ngClass]="{'diaActivo': esDiaActivo(5)}" (click)="cambiarDia(5)">
+          <h5>Vi</h5>
+        </div>
+        <div [ngClass]="{'diaActivo': esDiaActivo(6||0)}" (click)="cambiarDia(6)">
+          <h5>Semana</h5>
+        </div>
+      </div>
+      <ng-container *ngFor="let clase of clasesHoy" class="lista-asignaturas">
+        <ion-card *ngIf="esDiaActivo(6) || esDiaActivo(0)">
+          <ion-card-header>
+            <ion-card-title>{{ clase.asignatura }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Dia: {{ clase.dia }}</p>
+            <p>Horario: {{ clase.hora }}</p>
+            <p>Profesor: {{ clase.profesor }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+      <ion-card *ngFor="let clase of clasesHoy">
+        <ion-card-header>
+          <ion-card-title>{{ clase.asignatura }}</ion-card-title>
+        </ion-card-header>
+          <ion-card-content>
+            <p>Horario: {{ clase.hora }}</p>
+            <p>Profesor: {{ clase.profesor }}</p>
+          </ion-card-content>
+      </ion-card>      
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'contrasena'" class="contrasenaContent">
+    <div class="topBar">
+      <h1>RegistrApp<h6>Cambiar contraseña</h6></h1>
+    </div>
+    <div class="recuperarContrasena">
+      <input class="campoContrasena"
+        type="password"
+        placeholder="Ingrese su contraseña actual"
+        [(ngModel)]="currentPassword"
+        required
+      />
+      <input class="campoContrasena"
+        type="password" 
+        placeholder="Ingrese su nueva contraseña"
+        [(ngModel)]="newPassword"
+        required
+        minlength="6"
+      />
+      <input class="campoContrasena"
+        type="password"
+        placeholder="Confirme su nueva contraseña"
+        [(ngModel)]="confirmPassword"
+        required
+        minlength="6"
+      />
+      <button class="wrapper" (click)="cambiarContrasena()">Cambiar Contraseña</button>
     </div>
   </div>
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-inicio-profesores',
   templateUrl: './inicio-profesores.page.html',

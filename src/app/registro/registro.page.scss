@@ -44,6 +44,23 @@ ion-content.background.oscuro .alumnoprofesor {
   --inner-border-width: 0;
 } 
 
+ion-content.background.oscuro .botonRegistro{
+  color: white;
+  background-color: #333;
+  width: 300px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.botonRegistro{
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+  width: 300px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 .LoginLogo {
   width: 250px;
   height: 250px;
@@ -116,6 +133,15 @@ input::placeholder {
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  height: 50px;
+  border-radius: 25px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  align-items: center;
+  border: 2px solid #b083ff;
+  background-color: #b083ff;
+
 }
 
 b {

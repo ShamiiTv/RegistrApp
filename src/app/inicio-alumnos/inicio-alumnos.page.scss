@@ -48,6 +48,19 @@ ion-content.inicio-alumnos.oscuro ion-button.active {
   transform: scale(1.2);
 }
 
+ion-content.inicio-alumnos.oscuro ion-button:hover {
+  transform: scale(1.1);
+}
+
+ion-content.inicio-alumnos.oscuro .item1 {
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .item1 a {
+  color: #ffffff;
+}
 
 .divhome {
   width: 100%;
@@ -206,7 +219,14 @@ tbody td {
   margin-top: 110px;
 }
 
+.recuperarContrasena{
+  margin-top: 110px;
+}
 
+.item1 a{
+  text-decoration: none;
+  color: black;
+}
 
 .botonCerrarSesion{
   display: flex;
@@ -368,3 +388,75 @@ ion-content.inicio-alumnos.oscuro .item1{
   margin-right: 15px;
 }
 
+
+.recuperarContrasena{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  row-gap: 15px;
+  width: 100%;
+  max-width: 350px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  margin-top: 110px;
+  
+}
+
+.campoContrasena{
+  width: 100%;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  border-radius: 25px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  align-items: center;
+  border: 2px solid #b083ff;
+  background-color: #b083ff;
+
+}
+
+.tituloClases{
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.dias {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: sticky;
+  top: 110px; /* Añadir esto para que se quede fijo en la parte superior */
+  background-color: white; /* Asegúrate de que tenga un fondo */
+  z-index: 10; /* Para que esté por encima de otros elementos */
+}
+
+
+.diaActivo {
+  border-bottom: 5px solid #1f8ef1;
+  color: #1f8ef1;
+}
+
+.clases-hoy{
+  margin-top: 110px;
+}

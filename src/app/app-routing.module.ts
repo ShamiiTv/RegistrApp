@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'inicio-alumnos',
     loadChildren: () => import('./inicio-alumnos/inicio-alumnos.module').then( m => m.InicioAlumnosPageModule)
+  },  {
+    path: 'recuperar-contrasena',
+    loadChildren: () => import('./recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
   },
+
 ];
 
 @NgModule({

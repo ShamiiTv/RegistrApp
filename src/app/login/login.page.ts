@@ -1,9 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, AnimationController } from '@ionic/angular';
-import { AuthService } from '../auth.service'; 
 import { Haptics } from '@capacitor/haptics';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +19,6 @@ export class LoginPage implements AfterViewInit {
     private router: Router,
     private alertController: AlertController,
     private loadingController: LoadingController,
-    private authService: AuthService,
     private animationCtrl: AnimationController
   ) {}
 
@@ -34,35 +31,7 @@ export class LoginPage implements AfterViewInit {
     await alert.present();
   }
 
-  ngAfterViewInit() {
-    this.animationCtrl.create()
-      .addElement(document.querySelector("#logo")!)
-      .duration(2000)
-      .iterations(Infinity)
-      .direction("alternate")
-      .fromTo("color", "#6DDC98", "#51C8F0")
-      .fromTo("transform", "rotate(-10deg)", "rotate(10deg)")
-      .play();
-  
-    this.animationCtrl.create()
-      .addElement(document.querySelector(".BienvenidaTXT")!)
-      .duration(5000)
-      .iterations(Infinity)
-      .keyframes([
-        { offset: 0, opacity: 0 },
-        { offset: 0.5, opacity: 1 },
-        { offset: 1, opacity: 0 }
-      ])
-      .play();
-  
-    this.animationCtrl.create()
-      .addElement(document.querySelector(".ripple-parent")!)
-      .duration(4000)
-      .easing('ease-out')
-      .fromTo('transform', 'scale(0.8)', 'scale(1)')
-      .fromTo('opacity', '0', '1')
-      .play();
-  }
+  ngAfterViewInit() {}
 
   async animarError(index: number) {
     await Haptics.vibrate();
@@ -86,48 +55,74 @@ export class LoginPage implements AfterViewInit {
 
   claroOscuro() {
     this.isOscuro = !this.isOscuro;
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
+
+  ionViewWillEnter() {
+    this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
+  }
+
+  toggleSetting(setting: string) {
+    switch (setting) {
+      case 'darkMode':
+        this.isOscuro = !this.isOscuro;
+        break;
+    }
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
+  }
+
 
   async login() {
     if (!this.email || !this.password) {
       await this.presentAlert('Error', 'Por favor, ingresa tu correo y contraseña.');
       if (!this.email) {
-        await this.animarError(0);
+        await this.animarError(0); // Animate email input field
       }
       if (!this.password) {
-        await this.animarError(1);
+        await this.animarError(1); // Animate password input field
       }
       return;
     }
+  
     this.isSubmitting = true;
     const loading = await this.loadingController.create({
       message: 'Iniciando sesión...',
     });
     await loading.present();
-
-    try {
-      const response = await firstValueFrom(this.authService.login(this.email, this.password));
-      await loading.dismiss();
-
-      if (response.success) {
-        localStorage.setItem('user', JSON.stringify(response.user));
-
-        localStorage.setItem('tipoUsuario', response.tipoUsuario);
-
-        if (response.tipoUsuario === 'profesor') {
-          this.router.navigate(['/inicio-profesores']); 
+  
+    const storedUser = localStorage.getItem(this.email); // Retrieve the user by email
+  
+    if (storedUser) {
+      const userData = JSON.parse(storedUser); // Parse user data from localStorage
+  
+      if (userData.password === this.password) { // Verify password
+        localStorage.setItem('user', JSON.stringify(userData)); // Store user in localStorage
+  
+        await loading.dismiss();
+  
+        // Redirect user based on role
+        if (userData.tipoUsuario === 'profesor') {
+          this.router.navigate(['/inicio-profesores']);
         } else {
-          this.router.navigate(['/inicio-alumnos']); 
+          this.router.navigate(['/inicio-alumnos']);
         }
-
+      } else {
+        await this.presentAlert('Error', 'Contraseña incorrecta.');
+        await loading.dismiss();
+      }
     } else {
-      await this.presentAlert('Error', 'Correo o contraseña incorrectos.');
+      await this.presentAlert('Error', 'El correo ingresado no está registrado.');
+      await loading.dismiss();
     }
-  } catch (error) {
-    await loading.dismiss();
-    await this.presentAlert('Error', 'Correo o contraseña incorrectos.');
-    console.error('Error al iniciar sesión:', error);
+  
+    this.isSubmitting = false;
   }
-  this.isSubmitting = false;
-}
+
+  mostrarUsuarios() {
+    console.log(localStorage.getItem('user'));
+  }
+  verstorage() {
+    const users = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)!));
+    console.log('Usuarios:', users);
+  }
 }
