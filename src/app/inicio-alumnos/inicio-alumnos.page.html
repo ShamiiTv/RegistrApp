@@ -13,8 +13,13 @@
       <img src="/assets/imagenes/carrusel/carrusel1.png" alt="" />
     </div>
     <div class="botonesHome">
-      <a (click)="scan()"><ion-icon name="camera-outline" ></ion-icon>Marcar Asistencia</a>
-      <a><ion-icon name="newspaper-outline"></ion-icon>Justificar Inasistencia</a>
+      <a (click)="scan()"
+        ><ion-icon name="camera-outline"></ion-icon>Marcar Asistencia</a
+      >
+      <a
+        ><ion-icon name="newspaper-outline"></ion-icon>Justificar
+        Inasistencia</a
+      >
     </div>
   </div>
 
@@ -23,6 +28,9 @@
       <h1>RegistrApp</h1>
     </div>
     <div class="menuInicio">
+      <div class="item1">
+        <h3><a (click)="cambiarVista('perfil')">Ver Perfil</a></h3>
+      </div>
       <div class="item1">
         <h3>Modo Claro/Oscuro</h3>
         <label class="switch">
@@ -43,14 +51,21 @@
               ></path>
             </svg>
           </span>
-          <input type="checkbox" class="input" [checked]="isOscuro" (change)="claroOscuro()" />
+          <input
+            type="checkbox"
+            class="input"
+            [checked]="isOscuro"
+            (change)="claroOscuro()"
+          />
           <span class="slider"></span>
         </label>
       </div>
       <div class="item1">
         <h3><a (click)="cambiarVista('contrasena')">Cambiar contraseña</a></h3>
-      </div>      
-      <button class="botonCerrarSesion" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
+      <button class="botonCerrarSesion" (click)="cerrarSesion()">
+        Cerrar Sesión
+      </button>
     </div>
   </div>
   <div *ngIf="currentView === 'calendar'" class="calendarContent">
@@ -78,7 +93,10 @@
         <div [ngClass]="{'diaActivo': esDiaActivo(5)}" (click)="cambiarDia(5)">
           <h5>Vi</h5>
         </div>
-        <div [ngClass]="{'diaActivo': esDiaActivo(6||0)}" (click)="cambiarDia(6)">
+        <div
+          [ngClass]="{'diaActivo': esDiaActivo(6||0)}"
+          (click)="cambiarDia(6)"
+        >
           <h5>Semana</h5>
         </div>
       </div>
@@ -98,40 +116,72 @@
         <ion-card-header>
           <ion-card-title>{{ clase.asignatura }}</ion-card-title>
         </ion-card-header>
-          <ion-card-content>
-            <p>Horario: {{ clase.hora }}</p>
-            <p>Profesor: {{ clase.profesor }}</p>
-          </ion-card-content>
-      </ion-card>      
+        <ion-card-content>
+          <p>Horario: {{ clase.hora }}</p>
+          <p>Profesor: {{ clase.profesor }}</p>
+        </ion-card-content>
+      </ion-card>
     </div>
   </div>
 
+  <div *ngIf="currentView === 'perfil'" class="perfilContent">
+    <div class="topBar">
+      <h1>RegistrApp</h1>
+    </div>
+    <div class="perfil">
+      <div class="datosPerfil">
+        <div class="credencial">
+          <div class="fotoPerfil">
+            <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil"/>
+          </div>
+          <h3>{{userData.nombre}} {{userData.apellido}}</h3>
+        </div>
+      </div>
+      <div class="datosUsuario">
+        <div class="informacion">
+          <h4>Correo Institucional: <h5>{{userData.email}}</h5></h4>
+          <h4>Tipo de Usuario: <h5>{{userData.tipoUsuario}}</h5></h4>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="currentView === 'contrasena'" class="contrasenaContent">
     <div class="topBar">
-      <h1>RegistrApp<h6>Cambiar contraseña</h6></h1>
+      <h1>
+        RegistrApp
+        <h6>Cambiar contraseña</h6>
+      </h1>
     </div>
     <div class="recuperarContrasena">
-      <input class="campoContrasena"
+      <div class="fotoPerfil">
+        <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil"/>
+      </div>
+      <input
+        class="campoContrasena"
         type="password"
         placeholder="Ingrese su contraseña actual"
         [(ngModel)]="currentPassword"
         required
       />
-      <input class="campoContrasena"
-        type="password" 
+      <input
+        class="campoContrasena"
+        type="password"
         placeholder="Ingrese su nueva contraseña"
         [(ngModel)]="newPassword"
         required
         minlength="6"
       />
-      <input class="campoContrasena"
+      <input
+        class="campoContrasena"
         type="password"
         placeholder="Confirme su nueva contraseña"
         [(ngModel)]="confirmPassword"
         required
         minlength="6"
       />
-      <button class="wrapper" (click)="cambiarContrasena()">Cambiar Contraseña</button>
+      <button class="wrapper" (click)="cambiarContrasena()">
+        Cambiar Contraseña
+      </button>
     </div>
   </div>
 

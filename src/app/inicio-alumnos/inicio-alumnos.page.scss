@@ -62,6 +62,77 @@ ion-content.inicio-alumnos.oscuro .item1 a {
   color: #ffffff;
 }
 
+ion-content.inicio-alumnos.oscuro .botonesHome a {
+  color: rgb(255, 254, 254);
+  background: linear-gradient(to right, #a71cf2, #1f8ef1);
+}
+
+ion-content.inicio-alumnos.oscuro .botonesHome ion-icon {
+  color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .recuperarContrasena {
+  border-radius: 25px;
+  background-color: #e0dfdf;
+}
+
+ion-content.inicio-alumnos.oscuro .campoContrasena {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+ion-content.inicio-alumnos.oscuro .wrapper {
+  color: #ffffff;
+  border: 2px solid #b083ff;
+  background-color: #b083ff;
+}
+
+ion-content.inicio-alumnos.oscuro .tituloClases {
+  color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .dias {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .diaActivo {
+  color: #1f8ef1;
+}
+
+ion-content.inicio-alumnos.oscuro .perfil {
+  background-color: #333333;
+}
+
+ion-content.inicio-alumnos.oscuro .credencial {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .credencial h3 {
+  color: #000000;
+}
+
+ion-content.inicio-alumnos.oscuro .datosUsuario {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .datosUsuario h4,h5 {
+  color: #000000;
+}
+
+ion-content.inicio-alumnos.oscuro .informacion {
+  color: #ffffff;
+}
+
+ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
+  background-color: #f44336;
+  color: #ffffff;
+}
+
+
+
 .divhome {
   width: 100%;
   height: 10vh;
@@ -180,6 +251,7 @@ ion-content.inicio-alumnos.oscuro .item1 a {
 .bottomBar ion-button:hover {
   transform: scale(1.1); /* Agranda el botón cuando pasas el ratón */
 }
+
 
 
 
@@ -459,4 +531,50 @@ ion-content.inicio-alumnos.oscuro .item1{
 
 .clases-hoy{
   margin-top: 110px;
+}
+
+.perfil{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 110px;
+  row-gap: 20px;
+}
+
+.datosPerfil{
+  display: flex;
+  width: 90%;
+}
+.credencial{
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: 15px;
+}
+
+.fotoPerfil{
+  margin: 10px;
+  width: 120px;
+  height: 120px;  
+}
+
+.credencial h3{
+  align-self: center;
+}
+
+
+.datosUsuario{
+  width: 90%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.informacion{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }

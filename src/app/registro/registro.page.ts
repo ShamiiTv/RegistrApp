@@ -72,6 +72,11 @@ export class RegistroPage implements AfterViewInit {
           await this.presentAlert('Error', 'El nombre debe tener al menos 3 caracteres.');
         }
         break;
+      case 'apellido':
+        if (value.length < 3) {
+          await this.presentAlert('Error', 'El apellido debe tener al menos 3 caracteres.');
+        }
+        break;
       case 'email':
         if (!this.isEmailValid(value)) {
           await this.presentAlert('Error', 'Por favor, ingresa un correo electrónico válido.');
@@ -126,10 +131,14 @@ export class RegistroPage implements AfterViewInit {
         return;
     }
 
-    const { nombre, email, password, confirmPassword, codigoProfesor } = form.value;
+    const { nombre, apellido, email, password, confirmPassword, codigoProfesor } = form.value;
 
     if (nombre.length < 3) {
       await this.presentAlert('Error', 'El nombre debe tener al menos 3 caracteres.');
+      return;
+    }
+    if (apellido.length < 3) {
+      await this.presentAlert('Error', 'El apellido debe tener al menos 3 caracteres.');
       return;
     }
     if (!this.isEmailValid(email)) {
@@ -163,6 +172,7 @@ export class RegistroPage implements AfterViewInit {
     try {
       const userData = {
         nombre,
+        apellido,
         email,
         password,
         tipoUsuario: this.tipoUsuario,

@@ -71,15 +71,14 @@ export class LoginPage implements AfterViewInit {
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
 
-
   async login() {
     if (!this.email || !this.password) {
       await this.presentAlert('Error', 'Por favor, ingresa tu correo y contraseña.');
       if (!this.email) {
-        await this.animarError(0); // Animate email input field
+        await this.animarError(0);
       }
       if (!this.password) {
-        await this.animarError(1); // Animate password input field
+        await this.animarError(1);
       }
       return;
     }
@@ -90,17 +89,16 @@ export class LoginPage implements AfterViewInit {
     });
     await loading.present();
   
-    const storedUser = localStorage.getItem(this.email); // Retrieve the user by email
+    const storedUser = localStorage.getItem(this.email);
   
     if (storedUser) {
-      const userData = JSON.parse(storedUser); // Parse user data from localStorage
+      const userData = JSON.parse(storedUser);
   
-      if (userData.password === this.password) { // Verify password
-        localStorage.setItem('user', JSON.stringify(userData)); // Store user in localStorage
+      if (userData.password === this.password) {
+        localStorage.setItem('user', JSON.stringify(userData));
   
         await loading.dismiss();
   
-        // Redirect user based on role
         if (userData.tipoUsuario === 'profesor') {
           this.router.navigate(['/inicio-profesores']);
         } else {
@@ -121,8 +119,57 @@ export class LoginPage implements AfterViewInit {
   mostrarUsuarios() {
     console.log(localStorage.getItem('user'));
   }
+
   verstorage() {
     const users = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)!));
     console.log('Usuarios:', users);
+  }
+
+  async animarExito() {
+    const successElement = document.querySelector(".success-message");
+
+    if (successElement) {
+      this.animationCtrl.create()
+        .addElement(successElement)
+        .duration(500)
+        .keyframes([
+          { offset: 0, opacity: '0', transform: 'scale(0.5)' },
+          { offset: 0.5, opacity: '0.5', transform: 'scale(1.2)' },
+          { offset: 1, opacity: '1', transform: 'scale(1)' },
+        ])
+        .play();
+    }
+  }
+
+  async animarCarga() {
+    const loadingElement = document.querySelector(".loading-spinner");
+
+    if (loadingElement) {
+      this.animationCtrl.create()
+        .addElement(loadingElement)
+        .duration(1000)
+        .iterations(Infinity)
+        .keyframes([
+          { offset: 0, transform: 'rotate(0deg)' },
+          { offset: 1, transform: 'rotate(360deg)' },
+        ])
+        .play();
+    }
+  }
+
+  async animarBoton() {
+    const buttonElement = document.querySelector("button");
+
+    if (buttonElement) {
+      this.animationCtrl.create()
+        .addElement(buttonElement)
+        .duration(300)
+        .keyframes([
+          { offset: 0, transform: 'scale(1)', backgroundColor: 'blue' },
+          { offset: 0.5, transform: 'scale(1.1)', backgroundColor: 'lightblue' },
+          { offset: 1, transform: 'scale(1)', backgroundColor: 'blue' },
+        ])
+        .play();
+    }
   }
 }

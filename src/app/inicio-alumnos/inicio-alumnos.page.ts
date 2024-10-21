@@ -25,7 +25,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   receiveTextMessages: boolean = false;
   isSupported: boolean = false;
   barcodes: Barcode[] = [];
-  currentView: string = 'home';
+  currentView: string = 'menu';
   clasesHoy: Clase[] = [];
   showCalendar: boolean = false;
   diaActual: number = new Date().getDay();
@@ -34,6 +34,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     '2024-10-16': 'falto',
     '2024-10-17': 'parcial'
   };
+  userData: { nombre: string; apellido: string; email: string; tipoUsuario: string; password: string } = { nombre: '', apellido: '', email: '', tipoUsuario: '', password: '' };
   email: string = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).email : '';
 
   currentPassword: string = '';
@@ -84,8 +85,8 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   ngOnInit() {
     const currentUser = localStorage.getItem('user');
     if (currentUser) {
-      const userData = JSON.parse(currentUser);
-      this.email = userData.email;
+      this.userData = JSON.parse(currentUser);
+      this.email = this.userData.email;
     }
 
     BarcodeScanner.isSupported().then((result) => {
@@ -247,4 +248,21 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     });
     await alert.present();
   }
+
+  getUserData() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      userData.nombre = this.getUserData().nombre;
+      userData.apellido = this.getUserData().apellido;
+      userData.email = this.getUserData().email;
+      userData.tipoUsuario = this.getUserData().tipoUsuario;
+      userData.password = this.getUserData().password;
+      return userData;
+    }
+    return null;
+  }
+
+
+
 }

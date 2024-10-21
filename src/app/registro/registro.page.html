@@ -24,6 +24,7 @@
   <div class="FormularioLogin">
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="FormularioLogin">
       <input type="text" placeholder="Ingrese su nombre" ngModel name="nombre" required />
+      <input type="text" placeholder="Ingrese su apellido" ngModel name="apellido" required />
       <input type="email" placeholder="Correo Institucional" ngModel name="email" required email />
       <input type="password" placeholder="Contraseña" ngModel name="password" required minlength="6" />
       <input type="password" placeholder="Confirmar Contraseña" ngModel name="confirmPassword" required minlength="6" />
