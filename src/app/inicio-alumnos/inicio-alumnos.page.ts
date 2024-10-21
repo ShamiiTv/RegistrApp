@@ -25,18 +25,13 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   receiveTextMessages: boolean = false;
   isSupported: boolean = false;
   barcodes: Barcode[] = [];
-  currentView: string = 'menu';
+  currentView: string = 'home';
   clasesHoy: Clase[] = [];
+  asistencia: { [fecha: string]: { asignatura: string; estado: string } } = {};
   showCalendar: boolean = false;
   diaActual: number = new Date().getDay();
-  asistencia: { [key: string]: string } = {
-    '2024-10-15': 'asistio', // Ejemplo de día con asistencia
-    '2024-10-16': 'falto',
-    '2024-10-17': 'parcial'
-  };
   userData: { nombre: string; apellido: string; email: string; tipoUsuario: string; password: string } = { nombre: '', apellido: '', email: '', tipoUsuario: '', password: '' };
   email: string = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!).email : '';
-
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
@@ -62,6 +57,8 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     { id: 10, dia: 'Viernes', hora: '13:01 - 15:10', asignatura: 'Ingles Intermedio', profesor: 'Nicolas Yañez' },
     { id: 11, dia: 'Viernes', hora: '15:11 - 18:10', asignatura: 'Calidad de software', profesor: 'Gabriel Estivales' }
   ];
+
+
 
   constructor(
     private router: Router,
@@ -101,6 +98,37 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     } else {
       this.mostrarClasesHoy();
     }
+
+    this.obtenerClasesHoy();
+
+    this.cargarAsistencia();
+
+  }
+
+  cargarAsistencia() {
+    const datos = localStorage.getItem('asistencia');
+    if (datos) {
+      this.asistencia = JSON.parse(datos);
+    }
+  }
+
+  obtenerClasesHoy() {
+    const hoy = new Date();
+    const diaDeLaSemana = hoy.getDay();
+    this.clasesHoy = this.horarios.filter(clase => this.convertirDiaANumero(clase.dia) === diaDeLaSemana);
+  }
+
+  convertirDiaANumero(dia: string): number {
+    const dias: { [key: string]: number } = {
+      'Lunes': 1,
+      'Martes': 2,
+      'Miércoles': 3,
+      'Jueves': 4,
+      'Viernes': 5,
+      'Sábado': 6,
+      'Domingo': 0
+    };
+    return dias[dia] || 0; // Devuelve 0 si no se encuentra el día
   }
 
   ngAfterViewInit() {
@@ -122,9 +150,38 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   }
 
   async scan() {
-    const data = await CapacitorBarcodeScanner.scanBarcode({ hint: CapacitorBarcodeScannerTypeHint.ALL });
-    this.showToast(data.ScanResult);
+    try {
+      const result = await BarcodeScanner.scan() as { content?: string };
+      console.log(result);
+  
+      if (result.content) {
+        const qrData = result.content; // Supongamos que el QR tiene la asignatura
+        const fechaHoy = new Date().toISOString().split('T')[0];
+  
+        // Obtener la asistencia actual del localStorage
+        const asistenciaGuardada = JSON.parse(localStorage.getItem('asistencia') || '{}');
+  
+        // Verificar si ya se ha registrado asistencia para hoy
+        if (asistenciaGuardada[fechaHoy]) {
+          this.showToast('Ya marcaste asistencia para hoy.');
+        } else {
+          // Crear el registro de asistencia
+          asistenciaGuardada[fechaHoy] = { asignatura: qrData, estado: 'asistio' }; // Cambia 'asistio' según el estado que quieras registrar
+          localStorage.setItem('asistencia', JSON.stringify(asistenciaGuardada));
+          this.showToast('Asistencia marcada correctamente.');
+        }
+      } else {
+        this.showToast('No se encontró contenido en el código QR.');
+      }
+    } catch (error) {
+      console.error('Error al escanear código QR', error);
+      this.showToast('Error al escanear el código QR.');
+    }
   }
+  
+  
+  
+
 
   cerrarSesion() {
     localStorage.removeItem('user');
@@ -162,32 +219,6 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
 
       let html = '';
       let day = 1;
-
-      for (let row = 0; row < 6; row++) {
-        html += '<tr>';
-        for (let col = 0; col < 7; col++) {
-          if (row === 0 && col < startDay) {
-            html += '<td></td>';
-          } else if (day <= daysInMonth) {
-            const dateKey = `${year}-${month + 1}-${day}`;
-            let backgroundColor = 'white'; // Color por defecto
-            if (this.asistencia[dateKey] === 'asistio') {
-              backgroundColor = 'green';
-            } else if (this.asistencia[dateKey] === 'falto') {
-              backgroundColor = 'red';
-            } else if (this.asistencia[dateKey] === 'parcial') {
-              backgroundColor = 'yellow';
-            }
-
-            html += `<td><div style="background-color:${backgroundColor};height:60px;">${day}</div></td>`;
-            day++;
-          } else {
-            html += '<td></td>';
-          }
-        }
-        html += '</tr>';
-      }
-
       calendarBody.innerHTML = html;
     } else {
       console.error('No se encontró el elemento calendar-body');

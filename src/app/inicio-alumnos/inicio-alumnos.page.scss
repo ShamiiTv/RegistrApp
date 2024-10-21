@@ -578,3 +578,16 @@ ion-content.inicio-alumnos.oscuro .item1{
   flex-direction: column;
   padding: 10px;
 }
+
+
+.divScroll{
+  width: 100%; /* Ajusta el ancho según sea necesario */
+  height: 700px; /* Ajusta la altura según sea necesario */
+  overflow-y: scroll; /* Desplazamiento vertical */
+  overflow-x: hidden; /* Esconde el desplazamiento horizontal si lo hay */
+  padding: 10px;
+}
+
+.vistaAsistencia{
+  margin-top: 110px;
+}

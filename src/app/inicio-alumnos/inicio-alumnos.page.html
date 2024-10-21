@@ -16,13 +16,38 @@
       <a (click)="scan()"
         ><ion-icon name="camera-outline"></ion-icon>Marcar Asistencia</a
       >
-      <a
-        ><ion-icon name="newspaper-outline"></ion-icon>Justificar
-        Inasistencia</a
+      <a (click)="cambiarVista('asistencia')"
+        ><ion-icon name="newspaper-outline"></ion-icon>Ver
+        Asistencia</a
       >
     </div>
   </div>
 
+  <div *ngIf="currentView === 'asistencia'" class="asistenciaContent">
+    <div class="topBar">
+      <h1>RegistrApp</h1>
+    </div>
+    <div class="vistaAsistencia">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Asignatura</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fecha of (asistencia | keyvalue)">
+            <td>{{ fecha.key }}</td>
+            <td>{{ fecha.value.asignatura }}</td>
+            <td>{{ fecha.value.estado }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+  
   <div *ngIf="currentView === 'menu'" class="menuContent">
     <div class="topBar">
       <h1>RegistrApp</h1>
@@ -100,27 +125,31 @@
           <h5>Semana</h5>
         </div>
       </div>
-      <ng-container *ngFor="let clase of clasesHoy" class="lista-asignaturas">
-        <ion-card *ngIf="esDiaActivo(6) || esDiaActivo(0)">
+      <div class="divScroll" *ngIf="esDiaActivo(6)||esDiaActivo(0)">
+        <ng-container *ngFor="let clase of clasesHoy" class="lista-asignaturas">
+          <ion-card *ngIf="esDiaActivo(6) || esDiaActivo(0)">
+              <ion-card-header>
+                <ion-card-title>{{ clase.asignatura }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p>Dia: {{ clase.dia }}</p>
+                <p>Horario: {{ clase.hora }}</p>
+                <p>Profesor: {{ clase.profesor }}</p>
+              </ion-card-content>
+          </ion-card>
+        </ng-container>
+      </div>
+      <ng-container *ngFor="let clase of clasesHoy">
+        <ion-card *ngIf="esDiaActivo(1) || esDiaActivo(2) || esDiaActivo(3) || esDiaActivo(4) || esDiaActivo(5)">
           <ion-card-header>
             <ion-card-title>{{ clase.asignatura }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p>Dia: {{ clase.dia }}</p>
             <p>Horario: {{ clase.hora }}</p>
             <p>Profesor: {{ clase.profesor }}</p>
           </ion-card-content>
         </ion-card>
       </ng-container>
-      <ion-card *ngFor="let clase of clasesHoy">
-        <ion-card-header>
-          <ion-card-title>{{ clase.asignatura }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Horario: {{ clase.hora }}</p>
-          <p>Profesor: {{ clase.profesor }}</p>
-        </ion-card-content>
-      </ion-card>
     </div>
   </div>
 
@@ -132,15 +161,21 @@
       <div class="datosPerfil">
         <div class="credencial">
           <div class="fotoPerfil">
-            <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil"/>
+            <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil" />
           </div>
           <h3>{{userData.nombre}} {{userData.apellido}}</h3>
         </div>
       </div>
       <div class="datosUsuario">
         <div class="informacion">
-          <h4>Correo Institucional: <h5>{{userData.email}}</h5></h4>
-          <h4>Tipo de Usuario: <h5>{{userData.tipoUsuario}}</h5></h4>
+          <h4>
+            Correo Institucional:
+            <h5>{{userData.email}}</h5>
+          </h4>
+          <h4>
+            Tipo de Usuario:
+            <h5>{{userData.tipoUsuario}}</h5>
+          </h4>
         </div>
       </div>
     </div>
@@ -154,7 +189,7 @@
     </div>
     <div class="recuperarContrasena">
       <div class="fotoPerfil">
-        <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil"/>
+        <img src="/assets/imagenes/iconos/perfil.png" alt="IconoPerfil" />
       </div>
       <input
         class="campoContrasena"
