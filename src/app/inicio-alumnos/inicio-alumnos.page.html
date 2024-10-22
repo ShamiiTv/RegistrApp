@@ -12,14 +12,16 @@
     <div class="carrusel">
       <img src="/assets/imagenes/carrusel/carrusel1.png" alt="" />
     </div>
-    <div class="botonesHome">
-      <a (click)="scan()"
-        ><ion-icon name="camera-outline"></ion-icon>Marcar Asistencia</a
-      >
-      <a (click)="cambiarVista('asistencia')"
-        ><ion-icon name="newspaper-outline"></ion-icon>Ver
-        Asistencia</a
-      >
+    <div class="contenedorBotones">
+      <div class="botonesHome">
+        <a (click)="scan()"
+          ><ion-icon name="camera-outline"></ion-icon>Marcar Asistencia</a
+        >
+        <a (click)="cambiarVista('asistencia')"
+          ><ion-icon name="newspaper-outline"></ion-icon>Ver
+          Asistencia</a
+        >
+      </div>
     </div>
   </div>
 
@@ -28,24 +30,25 @@
       <h1>RegistrApp</h1>
     </div>
     <div class="vistaAsistencia">
-      <table>
+      <table class="tablaAsistencia">
         <thead>
           <tr>
             <th>Fecha</th>
+            <th>Hora</th>
             <th>Asignatura</th>
             <th>Estado</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let fecha of (asistencia | keyvalue)">
-            <td>{{ fecha.key }}</td>
-            <td>{{ fecha.value.asignatura }}</td>
-            <td>{{ fecha.value.estado }}</td>
+          <tr *ngFor="let asistencia of asistencias">
+            <td>{{ asistencia.fecha }}</td>
+            <td>{{ asistencia.hora }}</td>
+            <td>{{ asistencia.asignatura }}</td>
+            <td>{{ asistencia.estado }}</td>
           </tr>
         </tbody>
       </table>
-    </div>
-    
+    </div>  
   </div>
   
   <div *ngIf="currentView === 'menu'" class="menuContent">

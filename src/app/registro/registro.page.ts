@@ -26,6 +26,15 @@ export class RegistroPage implements AfterViewInit {
     private animationCtrl: AnimationController
   ) { }
 
+  asignaturas: { id: number; nombre: string; profesor: string; codigoProfesor: string;}[] = [
+    { id: 1, nombre: 'Programacion de aplicaciones moviles', profesor: 'Fernando Sepulveda' ,codigoProfesor: '111111'},
+    { id: 2, nombre: 'Arquitectura', profesor: 'Juan Hernandez' ,codigoProfesor: '222222'},
+    { id: 3, nombre: 'Calidad de software', profesor: 'Gabriel Estivales' ,codigoProfesor: '333333'},
+    { id: 4, nombre: 'Estadistica Descriptiva', profesor: 'Eduardo Jara' ,codigoProfesor: '444444'},
+    { id: 5, nombre: 'Ingles Intermedio', profesor: 'Nicolas Yañez' ,codigoProfesor: '555555'},
+    { id: 6, nombre: 'Etica para el trabajo', profesor: 'Jorge Rojas' ,codigoProfesor: '666666'},
+  ];
+
   ngAfterViewInit() {
     this.animationCtrl.create()
       .addElement(document.querySelector("#logo")!)

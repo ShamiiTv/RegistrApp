@@ -3,8 +3,9 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnimationController, AlertController, ToastController } from '@ionic/angular';
 import { Barcode, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
-import { Capacitor } from '@capacitor/core';
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint } from '@capacitor/barcode-scanner';
+
+
 
 interface Clase {
   id: number;
@@ -13,7 +14,13 @@ interface Clase {
   asignatura: string;
   profesor: string;
 }
-
+interface Asistencia {
+    fecha: string;
+    hora: string;
+    asignatura: string;
+    estado: string;
+  
+}
 @Component({
   selector: 'app-inicio-alumnos',
   templateUrl: './inicio-alumnos.page.html',
@@ -27,7 +34,8 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   barcodes: Barcode[] = [];
   currentView: string = 'home';
   clasesHoy: Clase[] = [];
-  asistencia: { [fecha: string]: { asignatura: string; estado: string } } = {};
+  asistencia: Asistencia | null = null;
+  asistencias: Asistencia[] = [];
   showCalendar: boolean = false;
   diaActual: number = new Date().getDay();
   userData: { nombre: string; apellido: string; email: string; tipoUsuario: string; password: string } = { nombre: '', apellido: '', email: '', tipoUsuario: '', password: '' };
@@ -35,13 +43,14 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
-  asignaturas: { id: number; nombre: string; profesor: string; }[] = [
-    { id: 1, nombre: 'Programacion de aplicaciones moviles', profesor: 'Fernando Sepulveda' },
-    { id: 2, nombre: 'Arquitectura', profesor: 'Juan Hernandez' },
-    { id: 3, nombre: 'Calidad de software', profesor: 'Gabriel Estivales' },
-    { id: 4, nombre: 'Estadistica Descriptiva', profesor: 'Eduardo Jara' },
-    { id: 5, nombre: 'Ingles Intermedio', profesor: 'Nicolas Yañez' },
-    { id: 6, nombre: 'Etica para el trabajo', profesor: 'Jorge Rojas' },
+  hora = new Date().toLocaleTimeString('es-CL');
+  asignaturas: { id: number; nombre: string; profesor: string; codigoProfesor: string;}[] = [
+    { id: 1, nombre: 'Programacion de aplicaciones moviles', profesor: 'Fernando Sepulveda' ,codigoProfesor: '111111'},
+    { id: 2, nombre: 'Arquitectura', profesor: 'Juan Hernandez' ,codigoProfesor: '222222'},
+    { id: 3, nombre: 'Calidad de software', profesor: 'Gabriel Estivales' ,codigoProfesor: '333333'},
+    { id: 4, nombre: 'Estadistica Descriptiva', profesor: 'Eduardo Jara' ,codigoProfesor: '444444'},
+    { id: 5, nombre: 'Ingles Intermedio', profesor: 'Nicolas Yañez' ,codigoProfesor: '555555'},
+    { id: 6, nombre: 'Etica para el trabajo', profesor: 'Jorge Rojas' ,codigoProfesor: '666666'},
   ];
 
   horarios: Clase[] = [
@@ -68,6 +77,13 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     private toast: ToastController
   ) {
     this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
+    this.cargarAsistencia();
+    this.cargarAsistencias();
+  }
+
+  cargarAsistencias() {
+    const asistenciasGuardadas = JSON.parse(localStorage.getItem('asistencias') || '[]');
+    this.asistencias = asistenciasGuardadas;
   }
 
   async showToast(message: string) {
@@ -106,12 +122,18 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   }
 
   cargarAsistencia() {
-    const datos = localStorage.getItem('asistencia');
-    if (datos) {
-      this.asistencia = JSON.parse(datos);
-    }
+    const asistenciaGuardada = JSON.parse(localStorage.getItem('asistencia') || '{}');
+    this.asistencia = asistenciaGuardada;
   }
 
+
+  obtenerFechaYHoraActual() {
+    const ahora = new Date();
+    const fecha = ahora.toLocaleDateString('es-CL'); // Formato de fecha en español
+    const hora = ahora.toLocaleTimeString('es-CL'); // Formato de hora en español
+  }
+
+  
   obtenerClasesHoy() {
     const hoy = new Date();
     const diaDeLaSemana = hoy.getDay();
@@ -151,37 +173,42 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
 
   async scan() {
     try {
-      const result = await BarcodeScanner.scan() as { content?: string };
-      console.log(result);
-  
-      if (result.content) {
-        const qrData = result.content; // Supongamos que el QR tiene la asignatura
-        const fechaHoy = new Date().toISOString().split('T')[0];
-  
-        // Obtener la asistencia actual del localStorage
-        const asistenciaGuardada = JSON.parse(localStorage.getItem('asistencia') || '{}');
-  
-        // Verificar si ya se ha registrado asistencia para hoy
-        if (asistenciaGuardada[fechaHoy]) {
-          this.showToast('Ya marcaste asistencia para hoy.');
-        } else {
-          // Crear el registro de asistencia
-          asistenciaGuardada[fechaHoy] = { asignatura: qrData, estado: 'asistio' }; // Cambia 'asistio' según el estado que quieras registrar
-          localStorage.setItem('asistencia', JSON.stringify(asistenciaGuardada));
-          this.showToast('Asistencia marcada correctamente.');
-        }
+      const data = await CapacitorBarcodeScanner.scanBarcode({ hint: CapacitorBarcodeScannerTypeHint.ALL });
+
+      const qr = data.ScanResult.split("--");
+
+      // Validar que qr tenga la longitud esperada
+      if (qr.length >= 3) {
+        const horaActual = new Date().toLocaleTimeString(); // Obtiene la hora actual en formato de 12 o 24 horas
+
+        const nuevaAsistencia: Asistencia = {
+          fecha: qr[0],
+          hora: horaActual,
+          asignatura: qr[2],
+          estado: 'Asistió'
+        };
+
+        // Agregar la nueva asistencia al arreglo de asistencias
+        this.asistencias.push(nuevaAsistencia);
+
+        // Guardar el historial de asistencias en localStorage
+        localStorage.setItem('asistencias', JSON.stringify(this.asistencias));
+        this.showToast('Asistencia registrada');
       } else {
-        this.showToast('No se encontró contenido en el código QR.');
+        console.error('Formato de QR no válido', qr);
+        this.showToast('Error: Formato de QR no válido');
       }
     } catch (error) {
-      console.error('Error al escanear código QR', error);
-      this.showToast('Error al escanear el código QR.');
+      console.error(error);
+      this.showToast('Error al escanear el código');
     }
   }
   
-  
-  
+  getHistorialAsistencias(): Asistencia[] {
+    return this.asistencias;
+  }
 
+  
 
   cerrarSesion() {
     localStorage.removeItem('user');

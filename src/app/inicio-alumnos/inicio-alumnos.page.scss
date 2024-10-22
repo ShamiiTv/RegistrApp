@@ -3,43 +3,31 @@ ion-content.inicio-alumnos {
 }
 
 ion-content.inicio-alumnos.oscuro {
-  --background: #333333;
+  --background: #1a1a22 ;
 }
 
-ion-content.inicio-alumnos.oscuro .tituloHome {
+ion-content.inicio-alumnos.oscuro .tituloHome,
+ion-content.inicio-alumnos.oscuro .botonesHome,
+ion-content.inicio-alumnos.oscuro .item1,
+ion-content.inicio-alumnos.oscuro .item1 a,
+ion-content.inicio-alumnos.oscuro .botonesHome a,
+ion-content.inicio-alumnos.oscuro .botonesHome ion-icon,
+ion-content.inicio-alumnos.oscuro .topBar h1,
+ion-content.inicio-alumnos.oscuro ion-button,
+ion-content.inicio-alumnos.oscuro .informacion,
+ion-content.inicio-alumnos.oscuro .diaActivo {
   color: #ffffff;
 }
 
-ion-content.inicio-alumnos.oscuro .botonesHome {
-  color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .carrusel {
-  background-color: #333333;
-}
-
-ion-content.inicio-alumnos.oscuro .boton1 {
-  background-color: #1f8ef1;
-}
-
+ion-content.inicio-alumnos.oscuro .boton1,
 ion-content.inicio-alumnos.oscuro .boton2 {
   background-color: #1f8ef1;
 }
 
-ion-content.inicio-alumnos.oscuro .bottomBar {
+ion-content.inicio-alumnos.oscuro .bottomBar,
+ion-content.inicio-alumnos.oscuro .topBar,
+ion-content.inicio-alumnos.oscuro .botonesHome a {
   background: linear-gradient(to right, #a71cf2, #1f8ef1);
-}
-
-ion-content.inicio-alumnos.oscuro .topBar {
-  background: linear-gradient(to right, #a71cf2, #1f8ef1);
-}
-
-ion-content.inicio-alumnos.oscuro .topBar h1 {
-  color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro ion-button {
-  color: #ffffff;
 }
 
 ion-content.inicio-alumnos.oscuro ion-button.active {
@@ -52,28 +40,9 @@ ion-content.inicio-alumnos.oscuro ion-button:hover {
   transform: scale(1.1);
 }
 
-ion-content.inicio-alumnos.oscuro .item1 {
-  border-top: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-  color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .item1 a {
-  color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .botonesHome a {
-  color: rgb(255, 254, 254);
-  background: linear-gradient(to right, #a71cf2, #1f8ef1);
-}
-
-ion-content.inicio-alumnos.oscuro .botonesHome ion-icon {
-  color: #ffffff;
-}
-
 ion-content.inicio-alumnos.oscuro .recuperarContrasena {
   border-radius: 25px;
-  background-color: #e0dfdf;
+  background-color: #4c4c53;
 }
 
 ion-content.inicio-alumnos.oscuro .campoContrasena {
@@ -87,51 +56,28 @@ ion-content.inicio-alumnos.oscuro .wrapper {
   background-color: #b083ff;
 }
 
-ion-content.inicio-alumnos.oscuro .tituloClases {
-  color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .dias {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .diaActivo {
-  color: #1f8ef1;
-}
-
-ion-content.inicio-alumnos.oscuro .perfil {
-  background-color: #333333;
-}
-
-ion-content.inicio-alumnos.oscuro .credencial {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-}
-
-ion-content.inicio-alumnos.oscuro .credencial h3 {
-  color: #000000;
-}
-
+ion-content.inicio-alumnos.oscuro .dias,
+ion-content.inicio-alumnos.oscuro .credencial,
 ion-content.inicio-alumnos.oscuro .datosUsuario {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  background-color: #4c4c53 ;
 }
 
-ion-content.inicio-alumnos.oscuro .datosUsuario h4,h5 {
+ion-content.inicio-alumnos.oscuro .dias h5{
+  color: white;
+  font-weight: bold;
+}
+
+ion-content.inicio-alumnos.oscuro .credencial h3,
+ion-content.inicio-alumnos.oscuro .datosUsuario h4,
+ion-content.inicio-alumnos.oscuro .datosUsuario h5 {
   color: #000000;
-}
-
-ion-content.inicio-alumnos.oscuro .informacion {
-  color: #ffffff;
 }
 
 ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   background-color: #f44336;
   color: #ffffff;
 }
-
-
 
 .divhome {
   width: 100%;
@@ -140,6 +86,7 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   justify-content: center;
   align-items: center;
 }
+
 .tituloHome {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   display: flex;
@@ -165,35 +112,30 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   margin-bottom: 50px;
 }
 
-.carrusel img{
+.carrusel img {
   width: 100%;
   height: 100%;
   border-radius: 20px;
+}
 
+.contenedorBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .botonesHome {
   display: grid;
-  grid-template-rows: repeat(2, 1fr); 
+  grid-template-rows: repeat(2, 1fr);
   justify-content: space-around;
   align-content: space-around;
-  width: 100%;
-  height: 45%;
   justify-items: center;
   align-items: center;
 }
 
-.boton1 {
-  color: white;
-  border: none;
-  border-radius: 20px;
-  width: 400px;
-  height: 150px;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
-
+.boton1,
 .boton2 {
   color: white;
   border: none;
@@ -204,7 +146,6 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   font-weight: bold;
   text-align: center;
 }
-
 
 .bottomBar {
   display: flex;
@@ -218,7 +159,7 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   border-radius: 50px 50px 0 0;
 }
 
-.topBar{
+.topBar {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -230,7 +171,7 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
   border-radius: 0 0 50px 50px;
 }
 
-.topBar h1{
+.topBar h1 {
   color: white;
   font-size: 30px;
   font-weight: bold;
@@ -243,27 +184,23 @@ ion-content.inicio-alumnos.oscuro .botonCerrarSesion {
 }
 
 .bottomBar ion-button.active {
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Sombra detrás del botón activo */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
   border-radius: 40px;
-  transform: scale(1.2); /* Agranda ligeramente el botón activo */
+  transform: scale(1.2);
 }
 
 .bottomBar ion-button:hover {
-  transform: scale(1.1); /* Agranda el botón cuando pasas el ratón */
+  transform: scale(1.1);
 }
-
-
-
-
 
 #calendar {
   margin: 20px auto;
   width: 90%;
   max-width: 600px;
-  background-color: #ffffff; /* Ajustar el fondo del calendario si es necesario */
-  border-radius: 10px; /* Añadir bordes redondeados si se desea */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Añadir sombra para mejor visualización */
-  border: 1px solid #ddd; /* Añadir borde para mejor visualización */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
   margin-top: 110px;
   color: black;
   text-align: center;
@@ -287,20 +224,29 @@ tbody td {
   height: 80px;
 }
 
-.menuInicio{
+.menuInicio,
+.recuperarContrasena,
+.clases-hoy,
+.perfil {
   margin-top: 110px;
 }
 
-.recuperarContrasena{
+.perfil{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 110px;
+  row-gap: 20px;
+
 }
 
-.item1 a{
+.item1 a {
   text-decoration: none;
   color: black;
 }
 
-.botonCerrarSesion{
+.botonCerrarSesion {
   display: flex;
   justify-content: center;
   width: 80%;
@@ -337,8 +283,8 @@ tbody td {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #73C0FC;
-  transition: .4s;
+  background-color: #73c0fc;
+  transition: 0.4s;
   border-radius: 30px;
 }
 
@@ -352,7 +298,7 @@ tbody td {
   bottom: 2px;
   z-index: 2;
   background-color: #e8e8e8;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .sun svg {
@@ -365,7 +311,7 @@ tbody td {
 }
 
 .moon svg {
-  fill: #73C0FC;
+  fill: #73c0fc;
   position: absolute;
   top: 5px;
   left: 5px;
@@ -374,39 +320,33 @@ tbody td {
   height: 24px;
 }
 
-/* .switch:hover */.sun svg {
+.sun svg {
   animation: rotate 15s linear infinite;
 }
 
 @keyframes rotate {
- 
   0% {
     transform: rotate(0);
   }
-
   100% {
     transform: rotate(360deg);
   }
 }
 
-/* .switch:hover */.moon svg {
+.moon svg {
   animation: tilt 5s linear infinite;
 }
 
 @keyframes tilt {
- 
   0% {
     transform: rotate(0deg);
   }
-
   25% {
     transform: rotate(-10deg);
   }
-
   75% {
     transform: rotate(10deg);
   }
-
   100% {
     transform: rotate(0deg);
   }
@@ -422,9 +362,9 @@ tbody td {
 
 .input:checked + .slider:before {
   transform: translateX(30px);
-} 
+}
 
-.item1{
+.item1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -433,14 +373,7 @@ tbody td {
   border-bottom: 1px solid #ddd;
 }
 
-ion-content.inicio-alumnos.oscuro .item1{
-  border-top: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-  color: #ffffff;
-}
-
-
-.botonesHome a{
+.botonesHome a {
   text-decoration: none;
   color: rgb(255, 254, 254);
   background: linear-gradient(to right, #a71cf2, #1f8ef1);
@@ -455,27 +388,25 @@ ion-content.inicio-alumnos.oscuro .item1{
   margin: 10px;
 }
 
-.botonesHome ion-icon{
+.botonesHome ion-icon {
   font-size: 2rem;
   margin-right: 15px;
 }
 
-
-.recuperarContrasena{
+.recuperarContrasena {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   row-gap: 15px;
+  margin-top: 110px;
   width: 100%;
   max-width: 350px;
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  margin-top: 110px;
-  
 }
 
-.campoContrasena{
+.campoContrasena {
   width: 100%;
   padding: 15px;
   background-color: #f0f0f0;
@@ -499,14 +430,12 @@ ion-content.inicio-alumnos.oscuro .item1{
   align-items: center;
   border: 2px solid #b083ff;
   background-color: #b083ff;
-
 }
 
-.tituloClases{
+.tituloClases {
   text-align: center;
   font-weight: bold;
 }
-
 
 .dias {
   display: flex;
@@ -518,9 +447,14 @@ ion-content.inicio-alumnos.oscuro .item1{
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   position: sticky;
-  top: 110px; /* Añadir esto para que se quede fijo en la parte superior */
-  background-color: white; /* Asegúrate de que tenga un fondo */
-  z-index: 10; /* Para que esté por encima de otros elementos */
+  top: 110px;
+  background-color: white;
+  z-index: 10;
+}
+
+ion-content.inicio-alumnos.oscuro .diaActivo {
+  border-bottom: 5px solid #b083ff;
+  color: #b083ff;
 }
 
 
@@ -529,43 +463,55 @@ ion-content.inicio-alumnos.oscuro .item1{
   color: #1f8ef1;
 }
 
-.clases-hoy{
-  margin-top: 110px;
+ion-content.inicio-alumnos.oscuro ion-card-content{
+  background-color: #4c4c53  !important;
+  color: #b99ee4;
 }
-
-.perfil{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 110px;
-  row-gap: 20px;
+ion-content.inicio-alumnos.oscuro ion-card-title{
+  color: white;
 }
-
-.datosPerfil{
+ion-content.inicio-alumnos.oscuro ion-card-header{
+  background-color: #4c4c53  !important;
+}
+.datosPerfil {
   display: flex;
   width: 90%;
 }
-.credencial{
+
+ion-content.inicio-alumnos.oscuro .credencial h3{
+  color: white;
+}
+
+.credencial {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
   width: 100%;
   border-radius: 15px;
+  margin: 0 auto;
 }
 
-.fotoPerfil{
+.fotoPerfil {
   margin: 10px;
   width: 120px;
-  height: 120px;  
+  height: 120px;
 }
 
-.credencial h3{
+.credencial h3 {
   align-self: center;
 }
 
+ion-content.inicio-alumnos.oscuro .informacion h5{
+  color: white;
+  font-weight: bold;
+}
 
-.datosUsuario{
+ion-content.inicio-alumnos.oscuro .informacion h4{
+  color: #b99ee4 ;
+  font-weight: bold;
+}
+
+.datosUsuario {
   width: 90%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
@@ -573,21 +519,64 @@ ion-content.inicio-alumnos.oscuro .item1{
   flex-direction: column;
 }
 
-.informacion{
+.informacion {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  
 }
 
-
-.divScroll{
-  width: 100%; /* Ajusta el ancho según sea necesario */
-  height: 700px; /* Ajusta la altura según sea necesario */
-  overflow-y: scroll; /* Desplazamiento vertical */
-  overflow-x: hidden; /* Esconde el desplazamiento horizontal si lo hay */
+.divScroll {
+  width: 100%;
+  height: 650px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding: 10px;
+  border-radius: 10px;
 }
 
-.vistaAsistencia{
+ion-content.inicio-alumnos.oscuro th {
+  background-color: #4c4c53;
+  color: #b083ff;
+  text-align: center; /* Centra el texto en el encabezado */
+}
+
+ion-content.inicio-alumnos.oscuro td {
+  background-color: #85939c;
+  color: white;
+  font-weight: bold;
+  text-align: center; /* Centra el texto en las celdas */
+}
+.vistaAsistencia {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+
+}
+
+
+
+.tablaAsistencia {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 110px;
+}
+
+.tablaAsistencia th,
+.tablaAsistencia td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.tablaAsistencia th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.tablaAsistencia tr:hover {
+  background-color: #f5f5f5;
 }
