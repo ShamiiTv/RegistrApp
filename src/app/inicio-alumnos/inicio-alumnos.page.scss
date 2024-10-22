@@ -3,7 +3,7 @@ ion-content.inicio-alumnos {
 }
 
 ion-content.inicio-alumnos.oscuro {
-  --background: #1a1a22 ;
+  --background: #1a1a22 !important; ;
 }
 
 ion-content.inicio-alumnos.oscuro .tituloHome,
@@ -42,7 +42,7 @@ ion-content.inicio-alumnos.oscuro ion-button:hover {
 
 ion-content.inicio-alumnos.oscuro .recuperarContrasena {
   border-radius: 25px;
-  background-color: #4c4c53;
+  background-color: #1a1a22 ;
 }
 
 ion-content.inicio-alumnos.oscuro .campoContrasena {
@@ -60,7 +60,7 @@ ion-content.inicio-alumnos.oscuro .dias,
 ion-content.inicio-alumnos.oscuro .credencial,
 ion-content.inicio-alumnos.oscuro .datosUsuario {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #4c4c53 ;
+  background-color: #1a1a22  ;
 }
 
 ion-content.inicio-alumnos.oscuro .dias h5{

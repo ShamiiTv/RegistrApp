@@ -98,9 +98,6 @@ export class RegistroPage implements AfterViewInit {
         break;
       case 'confirmPassword':
         const password = (document.querySelector('input[name="password"]') as HTMLInputElement).value;
-        if (value !== password) {
-          await this.presentAlert('Error', 'Las contraseñas no coinciden.');
-        }
         break;
       case 'codigoProfesor':
         if (this.tipoUsuario === 'profesor') {
@@ -133,75 +130,73 @@ export class RegistroPage implements AfterViewInit {
 
 
   async onSubmit(form: NgForm) {
-    console.log('Formulario enviado:', form.value); // Agrega esta línea para verificar
     if (form.invalid) {
-        form.form.markAllAsTouched();
-        await this.presentAlert('Error', 'Por favor, completa el formulario correctamente.');
-        return;
+      form.form.markAllAsTouched();
+      await this.presentAlert('Error', 'Por favor, completa el formulario correctamente.');
+      return;
     }
-
+  
     const { nombre, apellido, email, password, confirmPassword, codigoProfesor } = form.value;
 
-    if (nombre.length < 3) {
-      await this.presentAlert('Error', 'El nombre debe tener al menos 3 caracteres.');
-      return;
-    }
-    if (apellido.length < 3) {
-      await this.presentAlert('Error', 'El apellido debe tener al menos 3 caracteres.');
-      return;
-    }
-    if (!this.isEmailValid(email)) {
-      await this.presentAlert('Error', 'Por favor, ingresa un correo electrónico válido.');
-      return;
-    }
+  // Validaciones
+  await Promise.all([
+    this.validateField('nombre', nombre),
+    this.validateField('apellido', apellido),
+    this.validateField('email', email),
+    this.validateField('password', password),
+    this.validateField('confirmPassword', confirmPassword),
+    this.validateField('codigoProfesor', codigoProfesor)
+  ]);
 
-    if (password.length < 6) {
-      await this.presentAlert('Error', 'La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      await this.presentAlert('Error', 'Las contraseñas no coinciden.');
-      return;
-    }
-
-    if (this.tipoUsuario === 'profesor') {
-      const validCodes = this.codigoProfesor.split(',').map(code => code.trim());
-      if (!validCodes.includes(codigoProfesor)) {
-        await this.presentAlert('Error', 'El código de profesor es inválido.');
-        return;
-      }
-    }
-
-    const loading = await this.loadingController.create({
-      message: 'Registrando...',
-    });
-    await loading.present();
-
-    try {
-      const userData = {
-        nombre,
-        apellido,
-        email,
-        password,
-        tipoUsuario: this.tipoUsuario,
-        codigoProfesor: this.tipoUsuario === 'profesor' ? codigoProfesor : null,
-      };
-
-      localStorage.setItem(email, JSON.stringify(userData));
-      await loading.dismiss();
-      await this.presentAlert('Éxito', 'Registro completado exitosamente.');
-      this.router.navigate(['/login']);
-    } catch (error) {
-      await loading.dismiss();
-      await this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
-      console.error('Error al registrar:', error);
-    }
+  // Verificar si las contraseñas coinciden
+  if (password !== confirmPassword) {
+    await this.presentAlert('Error', 'Las contraseñas no coinciden.');
+    return; // Salimos si las contraseñas no coinciden
   }
+
+  // Si hubo errores en las validaciones, salimos de la función
+  if (form.invalid) return;
+
+  // Verificar si el correo ya está registrado aquí
+  if (this.isEmailRegistered(email)) {
+    await this.presentAlert('Error', 'Este correo electrónico ya está registrado.');
+    return; // Salimos si el correo ya está registrado
+  }
+
+  const loading = await this.loadingController.create({
+    message: 'Registrando...',
+  });
+  await loading.present();
+
+  try {
+    const userData = {
+      nombre,
+      apellido,
+      email,
+      password,
+      tipoUsuario: this.tipoUsuario,
+      codigoProfesor: this.tipoUsuario === 'profesor' ? codigoProfesor : null,
+    };
+
+    // Guardar en localStorage
+    localStorage.setItem(email, JSON.stringify(userData)); // Esto se hace solo si el correo no está registrado
+    await loading.dismiss();
+    await this.presentAlert('Éxito', 'Registro completado exitosamente.');
+    this.router.navigate(['/login']); // Redirigir al login solo después de un registro exitoso
+  } catch (error) {
+    await loading.dismiss();
+    await this.presentAlert('Error', 'Hubo un problema al registrar el usuario.');
+    console.error('Error al registrar:', error);
+  }
+}
 
   isEmailValid(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
+  }
+
+  isEmailRegistered(email: string): boolean {
+    return localStorage.getItem(email) !== null;
   }
 
   onUserTypeChange(event: any) {

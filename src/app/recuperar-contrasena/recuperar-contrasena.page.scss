@@ -1,6 +1,5 @@
 ion-content.background {
-  --background: url("/assets/imagenes/background/bg.png") 0 0/100% 100%
-    no-repeat;
+  --background: url("/assets/imagenes/background/bg.png") 0 0/100% 100% no-repeat;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -11,6 +10,14 @@ ion-content.background {
   transition: background 0.4s ease-in-out;
 }
 
+ion-content.background.oscuro {
+  --background: url('/assets/imagenes/background/bgOscuro.png') 0 0/100% 100% no-repeat;
+  background: url('/assets/imagenes/background/bgOscuro.png') 0 0/100% 100% no-repeat;
+}
+
+ion-content.background.oscuro .recuperarTXT{
+  color: #ffffff;
+}
 .LoginLogo {
   width: 250px;
   height: 250px;
@@ -122,8 +129,7 @@ ion-content.background {
   transform: translateX(30px);
 }
 
-
-.recuperarTXT{
+.recuperarTXT {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,9 +139,11 @@ ion-content.background {
   text-align: center;
   width: 100%;
   height: 15%;
-  
 }
 
+.recuperarTXT.oscuro {
+  color: #ffffff;
+}
 
 .contrasenaForm {
   display: flex;
@@ -159,8 +167,17 @@ input {
   box-sizing: border-box;
 }
 
+input.oscuro {
+  background-color: #333333;
+  color: #ffffff;
+}
+
 input::placeholder {
   color: #999;
+}
+
+input.oscuro::placeholder {
+  color: #cccccc;
 }
 
 .wrapper {
@@ -177,8 +194,12 @@ input::placeholder {
   align-items: center;
   border: 2px solid #b083ff;
   background-color: #b083ff;
+}
 
-} 
+.wrapper.oscuro {
+  border: 2px solid #6a4fbf;
+  background-color: #6a4fbf;
+}
 
 .lineadivisora {
   display: flex;
@@ -187,6 +208,10 @@ input::placeholder {
   width: 65%;
   margin-bottom: 20px;
   border-bottom: 2.5px solid #9393b4;
+}
+
+.lineadivisora.oscuro {
+  border-bottom: 2.5px solid #666699;
 }
 
 .redesiniciosesion {
@@ -209,7 +234,7 @@ input::placeholder {
   height: auto;
 }
 
-.espacio{
+.espacio {
   margin-top: 50px;
 }
 
@@ -224,14 +249,26 @@ input::placeholder {
   height: 1rem;
 }
 
+.nuevousuario.oscuro {
+  color: #cccccc;
+}
+
 .nuevousuario h6 {
   color: #999;
   font-weight: bold;
   text-decoration: none;
 }
 
+.nuevousuario h6.oscuro {
+  color: #cccccc;
+}
+
 .nuevousuario a {
   color: #4499fd;
   font-weight: bold;
   text-decoration: none;
+}
+
+.nuevousuario a.oscuro {
+  color: #66aaff;
 }

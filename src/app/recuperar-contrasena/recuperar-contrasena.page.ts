@@ -16,10 +16,10 @@ export class RecuperarContrasenaPage implements OnInit {
     private loadingController: LoadingController,
     private http: HttpClient,
     private alertController: AlertController
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
     this.loadUsersFromStorage();
   }
 
@@ -27,6 +27,20 @@ export class RecuperarContrasenaPage implements OnInit {
     this.isOscuro = !this.isOscuro;
     localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
   }
+
+  ionViewWillEnter() {
+    this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
+  }
+
+  toggleSetting(setting: string) {
+    switch (setting) {
+      case 'darkMode':
+        this.isOscuro = !this.isOscuro;
+        break;
+    }
+    localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
+  }
+
 
   loadUsersFromStorage() {
     const allUsers = [];
@@ -44,17 +58,6 @@ export class RecuperarContrasenaPage implements OnInit {
     }
 
     this.usuarios = allUsers;
-  }
-
-  ionViewWillEnter() {
-    this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
-  }
-
-  toggleSetting(setting: string) {
-    if (setting === 'darkMode') {
-      this.isOscuro = !this.isOscuro;
-      localStorage.setItem('isOscuro', JSON.stringify(this.isOscuro));
-    }
   }
 
   async presentAlert(header: string, message: string) {
