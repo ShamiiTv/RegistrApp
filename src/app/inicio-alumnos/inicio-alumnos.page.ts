@@ -5,8 +5,6 @@ import { AnimationController, AlertController, ToastController } from '@ionic/an
 import { Barcode, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint } from '@capacitor/barcode-scanner';
 
-
-
 interface Clase {
   id: number;
   dia: string;
@@ -15,12 +13,12 @@ interface Clase {
   profesor: string;
 }
 interface Asistencia {
-    fecha: string;
-    hora: string;
-    asignatura: string;
-    estado: string;
-  
+  fecha: string;
+  hora: string;
+  asignatura: string;
+  estado: string;
 }
+
 @Component({
   selector: 'app-inicio-alumnos',
   templateUrl: './inicio-alumnos.page.html',
@@ -67,8 +65,6 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     { id: 11, dia: 'Viernes', hora: '15:11 - 18:10', asignatura: 'Calidad de software', profesor: 'Gabriel Estivales' }
   ];
 
-
-
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -81,10 +77,6 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     this.cargarAsistencias();
   }
 
-  cargarAsistencias() {
-    const asistenciasGuardadas = JSON.parse(localStorage.getItem('asistencias') || '[]');
-    this.asistencias = asistenciasGuardadas;
-  }
 
   async showToast(message: string) {
     const toast = await this.toast.create({
@@ -118,7 +110,6 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     this.obtenerClasesHoy();
 
     this.cargarAsistencia();
-
   }
 
   cargarAsistencia() {
@@ -126,14 +117,12 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     this.asistencia = asistenciaGuardada;
   }
 
-
   obtenerFechaYHoraActual() {
     const ahora = new Date();
-    const fecha = ahora.toLocaleDateString('es-CL'); // Formato de fecha en español
-    const hora = ahora.toLocaleTimeString('es-CL'); // Formato de hora en español
+    const fecha = ahora.toLocaleDateString('es-CL');
+    const hora = ahora.toLocaleTimeString('es-CL');
   }
 
-  
   obtenerClasesHoy() {
     const hoy = new Date();
     const diaDeLaSemana = hoy.getDay();
@@ -150,7 +139,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
       'Sábado': 6,
       'Domingo': 0
     };
-    return dias[dia] || 0; // Devuelve 0 si no se encuentra el día
+    return dias[dia] || 0;
   }
 
   ngAfterViewInit() {
@@ -171,28 +160,37 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     this.clasesHoy = clasesSemanal;
   }
 
+  cargarAsistencias() {
+    const userEmail = this.userData.email;
+    const key = `asistencias_${userEmail}`;
+    const asistenciasGuardadas = JSON.parse(localStorage.getItem(key) || '[]');
+    this.asistencias = asistenciasGuardadas;
+  }
+  
+  registrarAsistencia(nuevaAsistencia: Asistencia) {
+    const userEmail = this.userData.email;
+    const key = `asistencias_${userEmail}`;
+    this.asistencias.push(nuevaAsistencia);
+    localStorage.setItem(key, JSON.stringify(this.asistencias));
+  }
+
   async scan() {
     try {
       const data = await CapacitorBarcodeScanner.scanBarcode({ hint: CapacitorBarcodeScannerTypeHint.ALL });
-
+  
       const qr = data.ScanResult.split("--");
-
-      // Validar que qr tenga la longitud esperada
+  
       if (qr.length >= 3) {
-        const horaActual = new Date().toLocaleTimeString(); // Obtiene la hora actual en formato de 12 o 24 horas
-
+        const horaActual = new Date().toLocaleTimeString();
+  
         const nuevaAsistencia: Asistencia = {
           fecha: qr[0],
           hora: horaActual,
           asignatura: qr[2],
           estado: 'Asistió'
         };
-
-        // Agregar la nueva asistencia al arreglo de asistencias
-        this.asistencias.push(nuevaAsistencia);
-
-        // Guardar el historial de asistencias en localStorage
-        localStorage.setItem('asistencias', JSON.stringify(this.asistencias));
+  
+        this.registrarAsistencia(nuevaAsistencia);
         this.showToast('Asistencia registrada');
       } else {
         console.error('Formato de QR no válido', qr);
@@ -204,11 +202,10 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     }
   }
   
+  
   getHistorialAsistencias(): Asistencia[] {
     return this.asistencias;
   }
-
-  
 
   cerrarSesion() {
     localStorage.removeItem('user');
@@ -290,7 +287,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
       const userData = JSON.parse(usuario);
       this.email = userData.email;
       userData.password = this.newPassword;
-      localStorage.setItem('user', JSON.stringify(userData)); // Cambié el ID a 'user'
+      localStorage.setItem('user', JSON.stringify(userData));
 
       await this.showAlert('Éxito', 'Contraseña cambiada exitosamente');
     } else {
@@ -320,7 +317,4 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     }
     return null;
   }
-
-
-
 }

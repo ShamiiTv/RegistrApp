@@ -80,10 +80,10 @@ export class RecuperarContrasenaPage implements OnInit {
   
       let nuevaPassword = Math.random().toString(36).slice(-6);
       usuario.password = nuevaPassword;
-  
+      
       let body = {
         nombre: usuario.nombre,
-        app: 'Tutorias',
+        app: 'RegistrApp',
         clave: nuevaPassword,
         email: usuario.email
       };
