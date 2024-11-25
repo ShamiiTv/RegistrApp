@@ -42,6 +42,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   newPassword: string = '';
   confirmPassword: string = '';
   hora = new Date().toLocaleTimeString('es-CL');
+  
   asignaturas: { id: number; nombre: string; profesor: string; codigoProfesor: string;}[] = [
     { id: 1, nombre: 'Programacion de aplicaciones moviles', profesor: 'Fernando Sepulveda' ,codigoProfesor: '111111'},
     { id: 2, nombre: 'Arquitectura', profesor: 'Juan Hernandez' ,codigoProfesor: '222222'},
