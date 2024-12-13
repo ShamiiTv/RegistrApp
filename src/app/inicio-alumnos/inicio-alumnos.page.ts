@@ -73,8 +73,15 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
     private toast: ToastController
   ) {
     this.isOscuro = JSON.parse(localStorage.getItem('isOscuro') || 'false');
+
     this.cargarAsistencia();
-    this.cargarAsistencias();
+    const currentUser = localStorage.getItem('user');
+  if (currentUser) {
+    this.userData = JSON.parse(currentUser);
+    this.email = this.userData.email;
+  }
+
+  this.cargarAsistencias();
   }
 
 
@@ -161,17 +168,25 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   }
 
   cargarAsistencias() {
-    const userEmail = this.userData.email;
-    const key = `asistencias_${userEmail}`;
-    const asistenciasGuardadas = JSON.parse(localStorage.getItem(key) || '[]');
-    this.asistencias = asistenciasGuardadas;
+    const userEmail = this.userData.email; // Obtener el email del usuario actual
+    if (userEmail) {
+      const key = `asistencias_${userEmail}`;
+      const asistenciasGuardadas = JSON.parse(localStorage.getItem(key) || '[]');
+      this.asistencias = asistenciasGuardadas;
+    } else {
+      this.asistencias = []; // Si no hay usuario, la lista está vacía
+    }
   }
   
   registrarAsistencia(nuevaAsistencia: Asistencia) {
-    const userEmail = this.userData.email;
-    const key = `asistencias_${userEmail}`;
-    this.asistencias.push(nuevaAsistencia);
-    localStorage.setItem(key, JSON.stringify(this.asistencias));
+    const userEmail = this.userData.email; // Obtener el email del usuario actual
+    if (userEmail) {
+      const key = `asistencias_${userEmail}`;
+      this.asistencias.push(nuevaAsistencia); // Agregar la nueva asistencia al arreglo
+      localStorage.setItem(key, JSON.stringify(this.asistencias)); // Guardar en localStorage
+    } else {
+      console.error('No se pudo registrar la asistencia: el usuario no está identificado.');
+    }
   }
 
   async scan() {
@@ -208,7 +223,7 @@ export class InicioAlumnosPage implements AfterViewInit, OnInit {
   }
 
   cerrarSesion() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('user'); 
     localStorage.removeItem('tipoUsuario');
     this.router.navigate(['/login']);
   }
